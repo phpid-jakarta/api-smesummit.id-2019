@@ -1,0 +1,14 @@
+{
+    "name": "phpid-jakarta/apismesummit",
+    "description": "PHP-ID Jakarta API SME Summit 2019",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ammar Faizi",
+            "email": "ammarfaizi2@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
