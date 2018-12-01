@@ -1,0 +1,21 @@
+<?php
+
+
+define("PDO_PARAMETERS", 
+	[
+		/**
+		 * PDO DSN
+		 */
+		"mysql:host=127.0.0.1;port=3306;dbname=smesummit",
+		
+		/**
+		 * Username
+		 */
+		"std_user",
+
+		/**
+		 * Password
+		 */ 
+		"eqJidWm/hunB27BdkygHtWjFpeCgN8.@q"
+	]
+);
