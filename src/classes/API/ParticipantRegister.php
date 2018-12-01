@@ -60,6 +60,48 @@ class ParticipantRegister implements APIContract
 	private function submit(): void
 	{
 		API::validateToken();
+
+		// Validate input
+		$i = json_decode(file_get_contents("php://input"), true);
+		$this->validateSubmitInput($i);
+	}
+
+	/**
+	 * @return void
+	 */
+	private function validateSubmitInput($i): void
+	{
+		$m = "Bad Request:";
+		$required = [
+			"name",
+			"company_name",
+			"position",
+			"company_sector",
+			"email",
+			"phone",
+			"problem_desc"
+		];
+
+		foreach ($required as $v) {
+			if (!isset($i[$v])) {
+				error_api("{$m} Field required: {$v}", 400);
+			}
+			if (!is_string($i[$v])) {
+				error_api("{$m} Field `{$v}` must be a string", 400);	
+			}
+
+			$i[$v] = trim($i[$v]);
+		}
+
+		if (!preg_match("/^[a-z\.\'\s]$/i", $i["name"])) {
+			error_api("{$m} Field `name` must be a valid person");
+		}
+
+		if (!preg_match("/^[a-z0-9\-\.\'\s]$/i", $i["company_name"])) {
+			error_api("{$m} Field `company_name` must be a valid company");
+		}
+
+		
 	}
 
 	/**
