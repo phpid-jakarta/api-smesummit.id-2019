@@ -41,3 +41,15 @@ if (!function_exists("error_api")) {
 		exit($errCode);
 	}
 }
+
+if (!function_exists("cencrypt")) {
+	/**
+	 * @param string $str
+	 * @param string $key
+	 * @return string $key
+	 */
+	function cencrypt(string $str, string $key): string
+	{
+		
+	}
+}
