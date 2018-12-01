@@ -31,7 +31,7 @@ if (!function_exists("error_api")) {
 	function error_api($errMsg, int $errCode): void
 	{
 		http_response_code($errCode);
-		print API::json011(
+		print API::json001(
 			"error",
 			[
 				"message" => $errMsg,

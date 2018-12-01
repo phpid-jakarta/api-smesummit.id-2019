@@ -23,7 +23,7 @@ class CencryptIntegrityTest extends TestCase
 	{
 		for ($i=1; $i <= 10000; $i++) { 
 			$str = rstr($i);
-			$key = rstr(32);
+			$key = rstr(72);
 
 			$encrypted = Cencrypt::encrypt($str, $key);
 
