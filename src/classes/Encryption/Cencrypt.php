@@ -9,7 +9,7 @@ namespace Encryption;
  *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
- * @package \
+ * @package \Encryption
  */
 final class Cencrypt
 {
