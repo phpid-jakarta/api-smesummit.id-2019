@@ -50,6 +50,19 @@ if (!function_exists("cencrypt")) {
 	 */
 	function cencrypt(string $str, string $key): string
 	{
-		
+		return \Encryption\Cencrypt::encrypt($str, $key);
 	}
 }
+
+if (!function_exists("dencrypt")) {
+	/**
+	 * @param string $str
+	 * @param string $key
+	 * @return string $key
+	 */
+	function dencrypt(string $str, string $key): string
+	{
+		return \Encryption\Cencrypt::decrypt($str, $key);
+	}
+}
+
