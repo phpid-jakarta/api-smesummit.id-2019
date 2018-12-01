@@ -21,7 +21,8 @@ class ParticipantRegisterTest extends TestCase
 	public function setUp(): void
 	{
 		$arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
-		shell_exec("sh -c {$arg}");
+		print shell_exec("sh -c {$arg}");
+		sleep(1);
 	}
 
 	/**
@@ -29,6 +30,16 @@ class ParticipantRegisterTest extends TestCase
 	 */
 	public function testGetToken(): void
 	{
-		$this->curl("http://localhost:");
+		$o = $this->curl("http://localhost:8080/participant_register.php?action=get_token");
+		$o = json_decode($o["out"], true);
+		$this->assertTrue(
+			isset(
+				$o["status"],
+				$o["data"],
+				$o["data"]["token"],
+				$o["data"]["expired"]
+			)
+		);
+		$this->assertEquals($o["status"], "success");
 	}
 }
