@@ -2,4 +2,4 @@
 
 require __DIR__."/../bootstrap/init.php";
 
-API::dispatch("Register");
+API::dispatch("ParticipantRegister");
