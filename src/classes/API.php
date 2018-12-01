@@ -3,9 +3,10 @@
 use Contracts\APIContract;
 
 /**
- * Load API config.
+ * Load API and APP config.
  */
 require BASEPATH."/config/api.php";
+require BASEPATH."/config/app.php";
 
 /**
  * Class ini digunakan untuk build JSON dan menjalankan API.
@@ -43,7 +44,7 @@ final class API
 	 * @param string $status
 	 * @param mixed  $data
 	 */
-	public static function json011(string $status, $data): string
+	public static function json001(string $status, $data): string
 	{
 		return self::encode(
 			[

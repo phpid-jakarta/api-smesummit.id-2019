@@ -2,6 +2,7 @@
 
 namespace API;
 
+use API;
 use Contracts\APIContract;
 
 /**
@@ -9,7 +10,7 @@ use Contracts\APIContract;
  * @license MIT
  * @package \API
  */
-class Register implements APIContract
+class ParticipantRegister implements APIContract
 {
 	/**
 	 * @var string
@@ -56,6 +57,16 @@ class Register implements APIContract
 	 */
 	private function getToken(): void
 	{
-		
+		print API::json001(
+			"success",
+			[
+				"token" => cencrypt(json_encode(
+					[
+						"expired" => (time()+3600),
+						"code" => rstr(16)
+					]
+				), APP_KEY)
+			]
+		);
 	}
 }
