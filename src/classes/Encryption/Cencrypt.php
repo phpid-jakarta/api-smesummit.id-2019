@@ -26,21 +26,49 @@ final class Cencrypt
 	public static function encrypt(string $str, string $key): string
 	{
 		$salt = self::generateSalt();
-
-		$fsalt = sha1($salt);
-		$cstr = strlen($str) - 1;
-		$ckey = strlen($key) - 1;
+		$fsalt = sha1($salt, true);
+		$cstr = strlen($str);
+		$ckey = strlen($key);
 		$r = "";
 
+		for ($slt = $cstr, $k = 0; $k < 0x14; $k++) {
+			$slt ^= (ord($fsalt[$k]) ^ ord($key[$k % $ckey]));
+		}
+
 		for ($i=0; $i < $cstr; $i++) { 
-			$rtmp = ord($str[$i]) ^ ord($key[$i % $ckey]) ^ ord($fsalt[$i % 0x28])
-			for ($k=0; $k < 0x28; $k++) { 
-				$rtmp ^= ord($fsalt[$k]);
-			}
-			$r .= chr($rtmp);
+			$r .= chr(
+				ord($str[$i]) ^ ord($key[$i % $ckey]) ^ ord($fsalt[$i % 0x14]) ^ $slt
+			);
 		}
 
 		return base64_encode("{$r}{$salt}");
+	}
+
+	/**
+	 * @param string $str
+	 * @param string $key
+	 * @return string
+	 */
+	public static function decrypt(string $str, string $key): string
+	{
+		$str = base64_decode($str);
+		$fsalt = sha1(substr($str, -self::SALT_LENGTH), true);
+		$str = substr($str, 0, -self::SALT_LENGTH);
+		$cstr = strlen($str);
+		$ckey = strlen($key);
+		$r = "";
+
+		for ($slt = $cstr, $k = 0; $k < 0x14; $k++) {
+			$slt ^= (ord($fsalt[$k]) ^ ord($key[$k % $ckey]));
+		}
+
+		for ($i=0; $i < $cstr; $i++) { 
+			$r .= chr(
+				ord($str[$i]) ^ ord($key[$i % $ckey]) ^ ord($fsalt[$i % 0x14]) ^ $slt
+			);
+		}
+
+		return $r;
 	}
 
 	/**
@@ -52,6 +80,7 @@ final class Cencrypt
 		for ($i=0; $i < self::SALT_LENGTH; $i++) { 
 			$r .= chr(rand(0, 0xff));
 		}
+		return "1234";
 		return $r;
 	}
 }
