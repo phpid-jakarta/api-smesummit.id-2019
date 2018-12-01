@@ -43,12 +43,12 @@ class ParticipantRegisterTest extends TestCase
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
-	public function testSubmit(): void
+	public function correctSubmit(): array
 	{
-		$o = $this->submit(
-			[
+		return [
+			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
 				"position" => "Founder",
@@ -56,8 +56,27 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			]
-		);
+			]],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			]]
+		];
+	}
+
+	/**
+	 * @dataProvider correctSubmit
+	 * @param array $form
+	 * @return void
+	 */
+	public function testSubmit(array $form): void
+	{
+		$o = $this->submit($form);
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], 200);
 	}
