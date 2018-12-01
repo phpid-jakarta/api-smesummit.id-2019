@@ -5,8 +5,6 @@ namespace Encryption;
 /**
  * Class ini digunakan untuk encrypt dan decrypt.
  *
- * @link https://en.wikipedia.org/wiki/Singleton_pattern
- *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
  * @package \Encryption

@@ -8,8 +8,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ini digunakan untuk mengetest integritas data pada encryption.
  *
- * @link https://en.wikipedia.org/wiki/Singleton_pattern
- *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
  * @package \tests\Encryption
