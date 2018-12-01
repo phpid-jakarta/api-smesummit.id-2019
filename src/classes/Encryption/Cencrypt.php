@@ -80,7 +80,6 @@ final class Cencrypt
 		for ($i=0; $i < self::SALT_LENGTH; $i++) { 
 			$r .= chr(rand(0, 0xff));
 		}
-		return "1234";
 		return $r;
 	}
 }

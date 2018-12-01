@@ -46,7 +46,9 @@ class ParticipantRegister implements APIContract
 			case "get_token":
 				$this->getToken();
 				break;
-			
+			case "submit":
+				$this->submit();
+				break;
 			default:
 				break;
 		}
@@ -55,17 +57,27 @@ class ParticipantRegister implements APIContract
 	/**
 	 * @return void
 	 */
+	private function submit(): void
+	{
+		API::validateToken();
+	}
+
+	/**
+	 * @return void
+	 */
 	private function getToken(): void
 	{
+		$expired = time()+3600;
 		print API::json001(
 			"success",
 			[
 				"token" => cencrypt(json_encode(
 					[
-						"expired" => (time()+3600),
-						"code" => rstr(16)
+						"expired" => $expired,
+						"code" => rstr(32)
 					]
-				), APP_KEY)
+				), APP_KEY),
+				"expired" => $expired
 			]
 		);
 	}
