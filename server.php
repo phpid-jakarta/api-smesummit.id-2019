@@ -1,5 +1,17 @@
 <?php
 
+declare(ticks=1);
+
+function deletePidFile()
+{
+	@unlink(__DIR__."/php_server.pid");
+}
+
+if (function_exists("pcntl_signal")) {
+	pcntl_signal(SIGINT, "deletePidFile");
+	pcntl_signal(SIGTERM, "deletePidFile");
+}
+
 $port = "8080";
 $docRoot = __DIR__."/public";
 
@@ -8,6 +20,8 @@ $fileDescriptor = [
 	["file", "php://stdout", "w"],
 	["file", "php://stdout", "w"]
 ];
+
+file_put_contents(__DIR__."/php_server.pid", getmypid());
 
 $docRoot = escapeshellarg($docRoot);
 

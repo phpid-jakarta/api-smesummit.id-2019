@@ -21,13 +21,15 @@ trait Curl
 	public function curl(string $url, array $opt = []): array
 	{
 		$ch = curl_init($url);
-		curl_setopt_array($ch, 
-			[
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_SSL_VERIFYPEER => false,
-				CURLOPT_SSL_VERIFYHOST => false
-			]
-		);
+		$optf = [
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => false
+		];
+		foreach ($opt as $key => $value) {
+			$optf[$key] = $value;
+		}
+		curl_setopt_array($ch, $optf);
 		$out = curl_exec($ch);
 		$info = curl_getinfo($ch);
 		$err = curl_error($ch);
