@@ -1,9 +1,9 @@
 <?php
 
-if (defined("__INIT")) {
+if (!defined("__INIT")) {
 	define("__INIT", 1);
 
-	require __DIR__."/config/init.php";
+	require __DIR__."/../config/init.php";
 
 	/**
 	 * @param string $class
@@ -20,4 +20,5 @@ if (defined("__INIT")) {
 	spl_autoload_register("myClassAutoloader");
 
 	require BASEPATH."/src/helpers.php";
+	header("Content-Type: application/json");
 }

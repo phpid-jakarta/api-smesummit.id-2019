@@ -19,5 +19,25 @@ if (!function_exists("rstr")) {
 		}
 
 		return $r;
-	}	
+	}
+}
+
+if (!function_exists("error_api")) {
+	/**
+	 * @param mixed $errMsg
+	 * @param int    $errCode
+	 * @return void
+	 */
+	function error_api($errMsg, int $errCode): void
+	{
+		http_response_code($errCode);
+		print API::json011(
+			"error",
+			[
+				"message" => $errMsg,
+				"error_code" => $errCode
+			]
+		);
+		exit($errCode);
+	}
 }
