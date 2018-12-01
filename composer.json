@@ -19,7 +19,7 @@
             "tests\\": "tests/"
         },
         "files": [
-            "boostrap/init.php"
+            "bootstrap/init.php"
         ]
     }
 }
