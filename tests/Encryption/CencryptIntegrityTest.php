@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
- * @package \Encryption
+ * @package \tests\Encryption
  */
 class CencryptIntegrityTest extends TestCase
 {

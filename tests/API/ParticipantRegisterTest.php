@@ -2,6 +2,7 @@
 
 namespace tests\API;
 
+use tests\Curl;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,5 +12,23 @@ use PHPUnit\Framework\TestCase;
  *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
- * @package \Encryption
+ * @package \test\API
  */
+class ParticipantRegisterTest extends TestCase
+{	
+	use Curl;
+
+	public function setUp(): void
+	{
+		$arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
+		shell_exec("sh -c {$arg}");
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testGetToken(): void
+	{
+		$this->curl("http://localhost:");
+	}
+}
