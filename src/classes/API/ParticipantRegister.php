@@ -4,6 +4,7 @@ namespace API;
 
 use DB;
 use API;
+use PDOException;
 use Contracts\APIContract;
 
 /**
@@ -69,25 +70,36 @@ class ParticipantRegister implements APIContract
 	 */
 	private function save(array &$i): void
 	{
-		$pdo = DB::pdo();
-		$st = $pdo->prepare(
-			"INSERT INTO `participants` (`name`, `company_name`, `position`, `company_sector`, `email`, `phone`, `problem_desc`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :email, :phone, :problem_desc, :created_at);"
-		);
-		$st->execute(
-			[
-				":name" => $i["name"],
-				":company_name" => $i["company_name"],
-				":position" => $i["position"],
-				":company_sector" => $i["company_sector"],
-				":email" => $i["email"],
-				":phone" => $i["phone"],
-				":problem_desc" => $i["problem_desc"],
-				":created_at" => date("Y-m-d H:i:s")
-			]
-		);
+		try {
+			$pdo = DB::pdo();
+			$st = $pdo->prepare(
+				"INSERT INTO `participants` (`name`, `company_name`, `position`, `company_sector`, `email`, `phone`, `problem_desc`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :email, :phone, :problem_desc, :created_at);"
+			);
+			$st->execute(
+				[
+					":name" => $i["name"],
+					":company_name" => $i["company_name"],
+					":position" => $i["position"],
+					":company_sector" => $i["company_sector"],
+					":email" => $i["email"],
+					":phone" => $i["phone"],
+					":problem_desc" => $i["problem_desc"],
+					":created_at" => date("Y-m-d H:i:s")
+				]
+			);	
+		} catch (PDOException $e) {
+			// Close PDO connection.
+			$st = $pdo = null;
+			
+			error_api("Internal Server Error: {$e->getMessage()}", 500);
+
+			unset($e, $st, $pdo, $i);
+			exit;
+		}
 
 		// Close PDO connection.
 		$st = $pdo = null;
+		unset($st, $pdo, $i);
 	}
 
 	/**
@@ -154,7 +166,8 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		unset($c);
+		unset($c, $i);
+		return;
 	}
 
 	/**
