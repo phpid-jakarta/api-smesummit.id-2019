@@ -18,4 +18,4 @@ Setelah membuat token, server akan merespon request dari client dengan isi token
 
 <img src="https://raw.githubusercontent.com/phpid-jakarta/api-smesummit.id-2019/docs/docs/images/token_concept/3.jpg"/>
 
-## 4. Client mengirimkan data ke 
+## 4. Client mengirimkan submit data ke server disertai dengan token
