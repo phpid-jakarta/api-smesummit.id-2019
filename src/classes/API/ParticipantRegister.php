@@ -176,15 +176,20 @@ class ParticipantRegister implements APIContract
 	private function getToken(): void
 	{
 		$expired = time()+3600;
+
+		// By using this token, we don't need any session which saved at the server side.
 		print API::json001(
 			"success",
 			[
+				// Encrypted expired time and random code 32 bytes.
 				"token" => cencrypt(json_encode(
 					[
 						"expired" => $expired,
 						"code" => rstr(32)
 					]
 				), APP_KEY),
+
+				// Show expired time.
 				"expired" => $expired
 			]
 		);
