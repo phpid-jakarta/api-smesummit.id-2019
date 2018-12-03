@@ -45,7 +45,7 @@ class ParticipantRegisterTest extends TestCase
 	/**
 	 * @return array
 	 */
-	public function correctSubmit(): array
+	private function validInput(): array
 	{
 		return [
 			[[
@@ -56,7 +56,7 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			]],
+			], true],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
@@ -65,21 +65,56 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			]]
+			], true]
 		];
 	}
 
 	/**
-	 * @dataProvider correctSubmit
+	 * @return array
+	 */
+	private function invalidInput(): array
+	{
+		return [
+			[[
+				"name" => "!!!!!Ammar Faizi",
+				"company_name" => "Tea Inside",
+				"position" => "Founder",
+				"company_sector" => "Chemistry",
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "085867152777",
+				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+			], false],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "~~PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false]
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function listOfParticipants(): array
+	{
+		return array_merge([], $this->validInput(), $this->invalidInput());
+	}
+
+	/**
+	 * @dataProvider listOfParticipants
 	 * @param array $form
+	 * @param bool  $isValid
 	 * @return void
 	 */
-	public function testSubmit(array $form): void
+	public function testSubmit(array $form, bool $isValid): void
 	{
 		$o = $this->submit($form);
 		$this->assertTrue(isset($o["info"]["http_code"]));
-		var_dump($o["out"]);die;
-		$this->assertEquals($o["info"]["http_code"], 200);
+		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 	}
 
 	/**
