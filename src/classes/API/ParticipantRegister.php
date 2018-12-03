@@ -29,15 +29,7 @@ class ParticipantRegister implements APIContract
 
 		$this->action = $_GET["action"];
 	}
-
-	/**
-	 * @return void
-	 */
-	public function sendHeaders(): void
-	{
-
-	}
-
+	
 	/**
 	 * @return void
 	 */
