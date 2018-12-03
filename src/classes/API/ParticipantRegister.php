@@ -141,24 +141,24 @@ class ParticipantRegister implements APIContract
 		}
 
 		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
-			error_api("{$m} \"{$i["email"]}\" is not a valid email address");
+			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
 			return;
 		}
 
 		if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
-			error_api("{$m} Invalid phone number");	
+			error_api("{$m} Invalid phone number", 400);	
 			return;
 		}
 
 		$c = strlen($i["problem_desc"]);
 
 		if ($c < 20) {
-			error_api("{$m} `problem_desc` is too short. Please provide a description at least 20 bytes.");
+			error_api("{$m} `problem_desc` is too short. Please provide a description at least 20 bytes.", 400);
 			return;
 		}
 
 		if ($c >= 200) {
-			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 200 bytes.");
+			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 200 bytes.", 400);
 			return;
 		}
 
@@ -170,7 +170,6 @@ class ParticipantRegister implements APIContract
 	 */
 	private function getToken(): void
 	{
-		$expired = time()+3600;
 		print API::json001(
 			"success",
 			[
@@ -180,7 +179,9 @@ class ParticipantRegister implements APIContract
 						"code" => rstr(32)
 					]
 				), APP_KEY),
-				"expired" => $expired
+
+				// 1 hour
+				"expired" => time()+3600
 			]
 		);
 	}
