@@ -170,6 +170,7 @@ class ParticipantRegister implements APIContract
 	 */
 	private function getToken(): void
 	{
+		$expired = time()+3600;
 		print API::json001(
 			"success",
 			[
@@ -179,9 +180,7 @@ class ParticipantRegister implements APIContract
 						"code" => rstr(32)
 					]
 				), APP_KEY),
-
-				// 1 hour
-				"expired" => time()+3600
+				"expired" => $expired
 			]
 		);
 	}

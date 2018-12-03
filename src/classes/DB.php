@@ -3,7 +3,7 @@
 /**
  * Load database config.
  */
-require BAESPATH."/config/database.php";
+require BASEPATH."/config/database.php";
 
 /**
  * Class ini digunakan untuk melakukan koneksi ke database dengan konsep Singleton Pattern.

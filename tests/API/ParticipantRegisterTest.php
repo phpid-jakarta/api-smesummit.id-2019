@@ -78,6 +78,7 @@ class ParticipantRegisterTest extends TestCase
 	{
 		$o = $this->submit($form);
 		$this->assertTrue(isset($o["info"]["http_code"]));
+		var_dump($o["out"]);die;
 		$this->assertEquals($o["info"]["http_code"], 200);
 	}
 
