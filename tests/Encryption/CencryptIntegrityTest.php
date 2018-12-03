@@ -16,8 +16,8 @@ class CencryptIntegrityTest extends TestCase
 {
 	public function testMain(): void
 	{
-		// $this->t01();
-		// $this->t02();
+		$this->t01();
+		$this->t02();
 		$this->assertTrue(true);
 	}
 
