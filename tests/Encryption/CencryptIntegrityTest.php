@@ -13,7 +13,10 @@ use PHPUnit\Framework\TestCase;
  * @package \tests\Encryption
  */
 class CencryptIntegrityTest extends TestCase
-{
+{	
+	/**
+	 * @return void
+	 */
 	public function testMain(): void
 	{
 		$this->t01();
