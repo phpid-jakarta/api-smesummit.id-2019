@@ -17,3 +17,5 @@ Pada tahap ini server menghitung waktu 1 jam ke depan sebagai expired time dan m
 Setelah membuat token, server akan merespon request dari client dengan isi token tersebut.
 
 <img src="https://raw.githubusercontent.com/phpid-jakarta/api-smesummit.id-2019/docs/docs/images/token_concept/3.jpg"/>
+
+## 4. Client mengirimkan data ke 
