@@ -140,7 +140,5 @@ class ParticipantRegisterTest extends TestCase
 	public function testClose(): void
 	{
 		$this->assertTrue(file_exists($f = BASEPATH."/php_server.pid"));
-		$pid = (int)file_get_contents(BASEPATH."/php_server.pid");
-		shell_exec("kill -TERM {$pid} 2>&1");
 	}
 }
