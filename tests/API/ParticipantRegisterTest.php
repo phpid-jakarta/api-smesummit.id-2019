@@ -113,6 +113,7 @@ class ParticipantRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid): void
 	{
 		$o = $this->submit($form);
+		var_dump($o);die;
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 	}

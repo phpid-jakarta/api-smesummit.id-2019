@@ -41,6 +41,9 @@ class ParticipantRegister implements APIContract
 				$this->getToken();
 				break;
 			case "submit":
+				$a = validate_token();
+				var_dump($a);
+				die;
 				$this->submit();
 				break;
 			default:

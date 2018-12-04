@@ -26,6 +26,7 @@ $fileDescriptor = [
 file_put_contents(__DIR__."/php_server.pid", getmypid());
 
 $docRoot = escapeshellarg($docRoot);
-
-$res = proc_open(PHP_BINARY." {$extArgv} -S 0.0.0.0:{$port} -t {$docRoot}", $fileDescriptor, $pipes);
+$cmd = PHP_BINARY." {$extArgv} -S 0.0.0.0:{$port} -t {$docRoot}";
+print $cmd.PHP_EOL.PHP_EOL;
+$res = proc_open($cmd, $fileDescriptor, $pipes);
 proc_close($res);

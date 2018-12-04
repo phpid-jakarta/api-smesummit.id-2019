@@ -1,8 +1,7 @@
 
 #include "headers/token_validator_class.hpp"
 
-token_validator::token_validator(std::string token) {
-	this->token = token;
+token_validator::token_validator() {
 }
 
 token_validator::~token_validator() {
@@ -15,14 +14,20 @@ token_validator::validate() {
 
 int
 token_validator::validate_header() {
-	
+	Php::out << Php::GLOBALS["_SERVER"]["HTTP_AUTHORIZATION"] << std::string("\n");
 
 	return 1;
 }
 
 int
 token_validator::validate_token() {
-	
-
-	return 1;
+	int r = 0;	
+	r = this->validate();
+	if (r) {
+		r = this->validate_header();
+		if (r) {
+			return r;
+		}
+	}
+	return 0;
 }
