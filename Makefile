@@ -52,4 +52,4 @@ clean:
 	${RM} ${OBJECTS} ${EXTENSION}
 
 link: 
-	${LN} ${EXTENSION} shared_objects/${EXTENSION}
+	${LN} ../${EXTENSION} shared_objects/${EXTENSION}
