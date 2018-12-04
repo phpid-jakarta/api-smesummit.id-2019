@@ -2,6 +2,10 @@
 
 declare(ticks=1);
 
+$extArgv = "";
+// $extArgv = "-d extension=".escapeshellarg(__DIR__."/shared_objects/apismesummit_ext1.so");
+
+
 function deletePidFile()
 {
 	@unlink(__DIR__."/php_server.pid");
@@ -25,5 +29,5 @@ file_put_contents(__DIR__."/php_server.pid", getmypid());
 
 $docRoot = escapeshellarg($docRoot);
 
-$res = proc_open(PHP_BINARY." -S 0.0.0.0:{$port} -t {$docRoot}", $fileDescriptor, $pipes);
+$res = proc_open(PHP_BINARY." {$extArgv} -S 0.0.0.0:{$port} -t {$docRoot}", $fileDescriptor, $pipes);
 proc_close($res);
