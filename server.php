@@ -2,6 +2,8 @@
 
 declare(ticks=1);
 
+$port = "8080";
+$docRoot = __DIR__."/public";
 $extArgv = "";
 // $extArgv = "-d extension=".escapeshellarg(__DIR__."/shared_objects/apismesummit_ext1.so");
 
@@ -15,9 +17,6 @@ if (function_exists("pcntl_signal")) {
 	pcntl_signal(SIGINT, "deletePidFile");
 	pcntl_signal(SIGTERM, "deletePidFile");
 }
-
-$port = "8080";
-$docRoot = __DIR__."/public";
 
 $fileDescriptor = [
 	["pipe", "r"],
