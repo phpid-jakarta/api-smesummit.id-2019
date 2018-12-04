@@ -1,5 +1,7 @@
 # API Pendaftaran Peserta
 
+### Pastikan Anda telah memahami Encrypted Token Session. Jika belum silakan baca di sini <a href="https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/docs/docs/token_concept.md">Konsep Encrypted Token Session</a>
+
 ## 1. API Endpoint
 ```
 https://api-smesummit.ammarfaizi2.net/register_participant.php
