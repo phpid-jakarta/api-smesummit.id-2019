@@ -7,8 +7,8 @@
 class token_validator
 {
 public:
-	token_validate(std::string token);
-	~token_validate();
+	token_validator(std::string token);
+	~token_validator();
 	int validate();
 private:
 	int validate_header();	

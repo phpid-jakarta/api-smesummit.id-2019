@@ -1,12 +1,11 @@
 
 #include "headers/token_validator_class.hpp"
 
-token_validator::token_validate(std::string token) {
+token_validator::token_validator(std::string token) {
 	this->token = token;
 }
 
-token_validaotr::~token_validate() {
-	this->token = NULL;
+token_validator::~token_validator() {
 }
 
 int
