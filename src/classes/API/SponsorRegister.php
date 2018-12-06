@@ -12,7 +12,7 @@ use Contracts\APIContract;
  * @license MIT
  * @package \API
  */
-class ParticipantRegister implements APIContract
+class SponsorRegister implements APIContract
 {
 	/**
 	 * @var string
