@@ -161,8 +161,8 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if ($c >= 200) {
-			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 200 bytes.", 400);
+		if ($c >= 1024) {
+			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 1024 bytes.", 400);
 			return;
 		}
 

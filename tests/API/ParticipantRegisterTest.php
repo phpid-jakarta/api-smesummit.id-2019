@@ -110,7 +110,25 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "septianhari@gmail.com",
 				"phone" => "9999",
 				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid phone number/"]
+			], false, "/Invalid phone number/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"problem_desc" => "..."
+			], false, "/`problem_desc` is too short\. Please provide a description at least 20 bytes\./"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"problem_desc" => str_repeat("q", 1025)
+			], false, "/`problem_desc` is too long\. Please provide a description with size less than 1024 bytes\./"]
 		];
 	}
 
