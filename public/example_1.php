@@ -24,7 +24,7 @@
 				<tr><td>Phone</td><td>:</td><td><input required type="text" id="phone" value="085867152777"></td></tr>
 				<tr><td>Problem Description</td><td>:</td><td><textarea required id="problem_desc" style="width: 195px; height: 84px;">I am the Bone of my Sword, Steel is my Body and Fire is my Blood. I have created over a Thousand Blades, Unknown to Death, Nor known to Life. Have withstood Pain to create many Weapons Yet those Hands will never hold Anything. So, as I Pray Unlimited Blade Works</textarea></td></tr>
 				<tr><td colspan="3" align="center"><img src="" id="captcha_image"></td></tr>
-				<tr><td colspan="3" align="center"><button id="reload_captcha">Reload Captcha</button></td></tr>
+				<tr><td colspan="3" align="center"><button type="button" id="reload_captcha">Reload Captcha</button></td></tr>
 				<tr><td colspan="3" align="center">Please enter the captcha above!</td></tr>
 				<tr><td colspan="3" align="center"><input required type="text" id="captcha_input"></td></tr>
 				<tr><td colspan="3" align="center"><button type="submit">Submit</button></td></tr>
