@@ -53,6 +53,10 @@ class ParticipantRegister implements APIContract
 	 */
 	private function submit(): void
 	{
+		if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+			error_api("Method not allowed", 405);
+		}
+		
 		API::validateToken();
 
 		// Validate input
