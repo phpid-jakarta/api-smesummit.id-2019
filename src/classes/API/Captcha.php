@@ -49,11 +49,15 @@ class Captcha implements APIContract
 			if (file_exists($filename) || makeCaptcha($this->token["code"], $filename)) {
 				header("Content-Type: image/jpg");
 				$handle = fopen($filename, "r");
-				while (!feof($handle)) {
-					print fread($handle, 1024);
-					flush();
+				if (is_resource($handle)) {
+					while (!feof($handle)) {
+						print fread($handle, 1024);
+						flush();
+					}
+					fclose($handle);
+				} else {
+					error_api("An error occured when generating captcha", 500);	
 				}
-				fclose($handle);
 				exit;
 			} else {
 				error_api("An error occured when generating captcha", 500);
