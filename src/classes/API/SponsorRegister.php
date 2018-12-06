@@ -77,17 +77,15 @@ class SponsorRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `position`, `company_sector`, `email`, `phone`, `problem_desc`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :email, :phone, :problem_desc, :created_at);"
+				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :phone, :sponsor_type, :created_at);"
 			);
 			$st->execute(
 				[
-					":name" => $i["name"],
 					":company_name" => $i["company_name"],
-					":position" => $i["position"],
 					":company_sector" => $i["company_sector"],
-					":email" => $i["email"],
+					":email_pic" => $i["email_pic"],
 					":phone" => $i["phone"],
-					":problem_desc" => $i["problem_desc"],
+					":sponsor_type" => $i["sponsor_type"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);	
@@ -147,7 +145,7 @@ class SponsorRegister implements APIContract
 		}
 
 		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
-			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
+			error_api("{$m} \"{$i["email_pic"]}\" is not a valid email address", 400);
 			return;
 		}
 
@@ -158,18 +156,6 @@ class SponsorRegister implements APIContract
 
 		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
 			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
-			return;
-		}
-
-		$c = strlen($i["problem_desc"]);
-
-		if ($c < 20) {
-			error_api("{$m} `problem_desc` is too short. Please provide a description at least 20 bytes.", 400);
-			return;
-		}
-
-		if ($c >= 1024) {
-			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 1024 bytes.", 400);
 			return;
 		}
 
@@ -192,7 +178,7 @@ class SponsorRegister implements APIContract
 				"token" => cencrypt(json_encode(
 					[
 						"expired" => $expired,
-						"code" => rstr(32)
+						"code" => rstr(6, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM")
 					]
 				), APP_KEY),
 

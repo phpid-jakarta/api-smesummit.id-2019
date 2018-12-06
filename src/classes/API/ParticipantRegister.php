@@ -199,7 +199,7 @@ class ParticipantRegister implements APIContract
 				"token" => cencrypt(json_encode(
 					[
 						"expired" => $expired,
-						"code" => rstr(32)
+						"code" => rstr(6, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM")
 					]
 				), APP_KEY),
 
