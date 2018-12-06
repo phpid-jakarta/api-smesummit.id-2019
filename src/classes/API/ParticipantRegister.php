@@ -134,13 +134,23 @@ class ParticipantRegister implements APIContract
 
 		unset($required, $v);
 
-		if (!preg_match("/^[a-z\.\'\s]{3,}$/i", $i["name"])) {
+		if (!preg_match("/^[a-z\.\'\s]{3,255}$/i", $i["name"])) {
 			error_api("{$m} Field `name` must be a valid person", 400);
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,}$/i", $i["company_name"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
 			error_api("{$m} Field `company_name` must be a valid company", 400);
+			return;
+		}
+
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+			error_api("{$m} Field `position` must be a valid position", 400);
+			return;
+		}
+
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
+			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
 			return;
 		}
 
