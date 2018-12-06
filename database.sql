@@ -5,6 +5,34 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `coachers`;
+CREATE TABLE `coachers` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `position` varchar(64) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  `latest_education` varchar(64) NOT NULL,
+  `experience` text NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `company_sector` varchar(32) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`),
+  KEY `company_name` (`company_name`),
+  KEY `position` (`position`),
+  KEY `email` (`email`),
+  KEY `photo` (`photo`),
+  KEY `latest_education` (`latest_education`),
+  KEY `phone` (`phone`),
+  KEY `company_sector` (`company_sector`),
+  FULLTEXT KEY `experience` (`experience`),
+  FULLTEXT KEY `topic` (`topic`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `participants`;
 CREATE TABLE `participants` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -26,4 +54,38 @@ CREATE TABLE `participants` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-03 05:39:27
+DROP TABLE IF EXISTS `sponsors`;
+CREATE TABLE `sponsors` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `company_name` varchar(255) NOT NULL,
+  `company_sector` varchar(255) NOT NULL,
+  `email_pic` varchar(255) NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `sponsor_type` enum('platinum','gold','silver') NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `company_name` (`company_name`),
+  KEY `company_sector` (`company_sector`),
+  KEY `email_pic` (`email_pic`),
+  KEY `phone` (`phone`),
+  KEY `sponsor_type` (`sponsor_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `volunteers`;
+CREATE TABLE `volunteers` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `why_you_apply_desc` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`),
+  KEY `email` (`email`),
+  KEY `phone` (`phone`),
+  FULLTEXT KEY `why_you_apply_desc` (`why_you_apply_desc`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- 2018-12-06 05:38:48

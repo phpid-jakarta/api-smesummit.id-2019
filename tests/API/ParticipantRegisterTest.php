@@ -106,15 +106,19 @@ class ParticipantRegisterTest extends TestCase
 
 	/**
 	 * @dataProvider listOfParticipants
-	 * @param array $form
-	 * @param bool  $isValid
+	 * @param array  $form
+	 * @param bool   $isValid
+	 * @param string $mustMatch
 	 * @return void
 	 */
-	public function testSubmit(array $form, bool $isValid): void
+	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
+		if (!is_null($mustMatch)) {
+			$this->assertTrue((bool)preg_match($mustMatch, $o["out"]));
+		}
 	}
 
 	/**

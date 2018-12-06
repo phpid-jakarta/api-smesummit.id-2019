@@ -27,7 +27,7 @@ OBJECTS = $(SOURCES:%.cpp=%.o)
 
 SHARED_OBJECT_TO_BE_COMMITED = shared_objects/${NAME}.so.deploy
 
-all:	${OBJECTS} ${EXTENSION}
+all:	${OBJECTS} ${EXTENSION} link
 
 ${EXTENSION}: ${OBJECTS}
 	${LINKER} ${LINKER_FLAGS} -o $@ ${OBJECTS} ${LINKER_DEPENDENCIES}
@@ -50,3 +50,6 @@ install:
 
 clean:
 	${RM} ${OBJECTS} ${EXTENSION}
+
+link: 
+	${LN} ../${EXTENSION} shared_objects/${EXTENSION}
