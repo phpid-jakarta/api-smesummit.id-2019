@@ -20,6 +20,11 @@ class ParticipantRegister implements APIContract
 	private $action;
 
 	/**
+	 * @var string
+	 */
+	private $captcha;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct()
@@ -57,7 +62,7 @@ class ParticipantRegister implements APIContract
 			error_api("Method not allowed", 405);
 		}
 		
-		API::validateToken();
+		$this->captcha = API::validateToken();
 
 		// Validate input
 		$i = json_decode(file_get_contents("php://input"), true);
@@ -120,7 +125,8 @@ class ParticipantRegister implements APIContract
 			"company_sector",
 			"email",
 			"phone",
-			"problem_desc"
+			"problem_desc",
+			"captcha"
 		];
 
 		foreach ($required as $v) {
@@ -134,6 +140,11 @@ class ParticipantRegister implements APIContract
 			}
 
 			$i[$v] = trim($i[$v]);
+		}
+
+		if ($i["captcha"] !== $this->captcha) {
+			error_api("{$m} Invalid captcha response", 400);
+			return;
 		}
 
 		unset($required, $v);

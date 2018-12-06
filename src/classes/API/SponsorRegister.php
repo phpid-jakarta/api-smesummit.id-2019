@@ -20,6 +20,11 @@ class SponsorRegister implements APIContract
 	private $action;
 
 	/**
+	 * @var string
+	 */
+	private $captcha;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct()
@@ -57,7 +62,7 @@ class SponsorRegister implements APIContract
 			error_api("Method not allowed", 405);
 		}
 
-		API::validateToken();
+		$this->captcha = API::validateToken();
 
 		// Validate input
 		$i = json_decode(file_get_contents("php://input"), true);
@@ -116,7 +121,8 @@ class SponsorRegister implements APIContract
 			"company_sector",
 			"email_pic",
 			"phone",
-			"sponsor_type"
+			"sponsor_type",
+			"captcha"
 		];
 
 		foreach ($required as $v) {
@@ -130,6 +136,11 @@ class SponsorRegister implements APIContract
 			}
 
 			$i[$v] = trim($i[$v]);
+		}
+
+		if ($i["captcha"] !== $this->captcha) {
+			error_api("{$m} Invalid captcha response", 400);
+			return;
 		}
 
 		unset($required, $v);
