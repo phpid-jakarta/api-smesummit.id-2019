@@ -83,7 +83,7 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			], false],
+			], false, "/Field `name` must be a valid person/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "~~PHP LTM Group",
@@ -92,7 +92,25 @@ class ParticipantRegisterTest extends TestCase
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false]
+			], false, "/Field `company_name` must be a valid company/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianh@ari@gmail.com",
+				"phone" => "085123123123",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/is not a valid email address/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "9999",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid phone number/"]
 		];
 	}
 
@@ -114,8 +132,10 @@ class ParticipantRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
+
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
+
 		if (!is_null($mustMatch)) {
 			$this->assertTrue((bool)preg_match($mustMatch, $o["out"]));
 		}
