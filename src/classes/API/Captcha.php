@@ -3,6 +3,7 @@
 namespace API;
 
 use API;
+use Error;
 use Contracts\APIContract;
 
 /**
@@ -41,6 +42,28 @@ class Captcha implements APIContract
 	public function run(): void
 	{
 		$this->decryptToken();
+		$hash = sha1($_GET["token"]);
+		$filename = BASEPATH."/storage/captcha_images/{$this->token["expired"]}_{$this->token["code"]}_{$hash}.jpg";
+		unset($now, $_GET);
+		try {
+			if (file_exists($filename) || makeCaptcha($this->token["code"], $filename)) {
+				header("Content-Type: image/jpg");
+				$handle = fopen($filename, "r");
+				while (!feof($handle)) {
+					print fread($handle, 1024);
+					flush();
+				}
+				fclose($handle);
+				exit;
+			} else {
+				error_api("An error occured when generating captcha", 500);
+				exit;
+			}
+		} catch (Error $e) {
+			unset($e);
+			error_api("Internal Server Error: {$e->getMessage()}");
+			exit;
+		}
 	}
 
 	/**
