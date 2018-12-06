@@ -110,13 +110,11 @@ class SponsorRegister implements APIContract
 	{
 		$m = "Bad Request:";
 		$required = [
-			"name",
 			"company_name",
-			"position",
 			"company_sector",
-			"email",
+			"email_pic",
 			"phone",
-			"problem_desc"
+			"sponsor_type"
 		];
 
 		foreach ($required as $v) {
@@ -134,23 +132,28 @@ class SponsorRegister implements APIContract
 
 		unset($required, $v);
 
-		if (!preg_match("/^[a-z\.\'\s]{3,}$/i", $i["name"])) {
-			error_api("{$m} Field `name` must be a valid person", 400);
-			return;
-		}
-
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,}$/i", $i["company_name"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
 			error_api("{$m} Field `company_name` must be a valid company", 400);
 			return;
 		}
 
-		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
+			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
+			return;
+		}
+
+		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
 			return;
 		}
 
 		if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
 			error_api("{$m} Invalid phone number", 400);	
+			return;
+		}
+
+		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
+			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
 			return;
 		}
 
