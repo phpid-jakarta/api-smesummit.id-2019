@@ -13,6 +13,7 @@
 </head>
 <body>
 	<center>
+		<a style="color:blue;text-decoration:none;" target="_blank" href="/show_db.php?table=participants">Show Table [participants]</a>
 		<h2>Participant Register</h2>
 		<form id="main_form" action="javascript:void(0);">
 			<table>
@@ -61,8 +62,35 @@
 		function listenForm() {
 			document.getElementById("main_form").addEventListener("submit", function () {
 				var data = {
-
+					"name": document.getElementById("name").value,
+					"company_name": document.getElementById("company_name").value,
+					"position": document.getElementById("position").value,
+					"company_sector": document.getElementById("company_sector").value,
+					"email": document.getElementById("email").value,
+					"phone": document.getElementById("phone").value,
+					"problem_desc": document.getElementById("problem_desc").value,
+					"captcha": document.getElementById("captcha_input").value,
 				};
+				var ch = new XMLHttpRequest;
+					ch.onreadystatechange = function () {
+						if (this.readyState === 4) {
+							alert(this.responseText);
+							try {
+								var res = JSON.parse(this.responseText);
+								if (typeof res["data"]["message"] !== "undefined") {
+									alert(res["data"]["message"]);
+									if (res["data"]["message"] === "register_success") {
+										window.location = "?";
+									}
+								}
+							} catch (e) {
+								alert("An error occured:\n"+e.message);
+							}
+						}
+					};
+					ch.open("POST", "/participant_register.php?action=submit");
+					ch.setRequestHeader("Authorization", "Bearer "+document.getElementById("_token").value);
+					ch.send(JSON.stringify(data));
 			});
 		}
 

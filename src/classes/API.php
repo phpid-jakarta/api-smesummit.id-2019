@@ -28,7 +28,10 @@ final class API
 		self::exec($api);
 	}
 
-	public static function validateToken(): void
+	/**
+	 * @return string
+	 */
+	public static function validateToken()
 	{
 		if (isset($_SERVER["HTTP_AUTHORIZATION"])) {
 			$a = explode("Bearer", $_SERVER["HTTP_AUTHORIZATION"], 2);
@@ -39,13 +42,15 @@ final class API
 					// If the token has been expired.
 					if ($a["expired"] < time()) {
 						error_api("Unauthorized: Token expired", 401);
+						exit;
 					}
 
-					return;
+					return $a["code"];
 				}
 			}
 		}
 		error_api("Unauthorized", 401);
+		exit;
 	}
 
 	/**

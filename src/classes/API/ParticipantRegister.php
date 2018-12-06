@@ -95,7 +95,13 @@ class ParticipantRegister implements APIContract
 					":problem_desc" => $i["problem_desc"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
-			);	
+			);
+
+			print API::json001("success",
+				[
+					"message" => "register_success"
+				]
+			);
 		} catch (PDOException $e) {
 			// Close PDO connection.
 			$st = $pdo = null;
@@ -159,7 +165,7 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+		if (!preg_match("/^[\\a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
 			error_api("{$m} Field `position` must be a valid position", 400);
 			return;
 		}

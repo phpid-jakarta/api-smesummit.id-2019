@@ -85,10 +85,9 @@ if (!function_exists("hextorgb")) {
 if (!function_exists("makeCaptcha")) {
 	/**
 	 * @param string $captcha_code
-	 * @param string $file
 	 * @return bool
 	 */
-	function makeCaptcha(string $captcha_code, string $file): bool
+	function makeCaptcha(string $captcha_code): bool
 	{
 		//You can customize your captcha settings here
 
@@ -170,7 +169,7 @@ if (!function_exists("makeCaptcha")) {
 			$captcha_code
 		);
 
-		$st = imagejpeg($captcha_image, $file);
+		$st = imagejpeg($captcha_image);
 		imagedestroy($captcha_image);
 
 		return $st;
