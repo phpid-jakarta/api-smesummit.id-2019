@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 $arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
 print shell_exec("sh -c {$arg}");
-sleep(2);
 
 static $testToken = NULL;
 
