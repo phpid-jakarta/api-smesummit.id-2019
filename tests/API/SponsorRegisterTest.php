@@ -27,7 +27,7 @@ class ParticipantRegisterTest extends TestCase
 	public function testGetToken(): void
 	{
 		global $testToken;
-		$o = $this->curl("http://localhost:8080/participant_register.php?action=get_token");
+		$o = $this->curl("http://localhost:8080/sponsor_register.php?action=get_token");
 		$o = json_decode($o["out"], true);
 		$this->assertTrue(
 			isset(
@@ -172,7 +172,7 @@ class ParticipantRegisterTest extends TestCase
 				"Content-Type: application/json"
 			]
 		];
-		return $this->curl("http://localhost:8080/participant_register.php?action=submit", $opt);
+		return $this->curl("http://localhost:8080/sponsor_register.php?action=submit", $opt);
 	}
 
 	/**

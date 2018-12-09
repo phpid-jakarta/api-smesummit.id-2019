@@ -20,6 +20,11 @@ class ParticipantRegister implements APIContract
 	private $action;
 
 	/**
+	 * @var string
+	 */
+	private $captcha;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct()
@@ -53,7 +58,11 @@ class ParticipantRegister implements APIContract
 	 */
 	private function submit(): void
 	{
-		API::validateToken();
+		if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+			error_api("Method not allowed", 405);
+		}
+		
+		$this->captcha = API::validateToken();
 
 		// Validate input
 		$i = json_decode(file_get_contents("php://input"), true);
@@ -86,7 +95,13 @@ class ParticipantRegister implements APIContract
 					":problem_desc" => $i["problem_desc"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
-			);	
+			);
+
+			print API::json001("success",
+				[
+					"message" => "register_success"
+				]
+			);
 		} catch (PDOException $e) {
 			// Close PDO connection.
 			$st = $pdo = null;
@@ -116,7 +131,8 @@ class ParticipantRegister implements APIContract
 			"company_sector",
 			"email",
 			"phone",
-			"problem_desc"
+			"problem_desc",
+			"captcha"
 		];
 
 		foreach ($required as $v) {
@@ -132,15 +148,30 @@ class ParticipantRegister implements APIContract
 			$i[$v] = trim($i[$v]);
 		}
 
+		if ($i["captcha"] !== $this->captcha) {
+			error_api("{$m} Invalid captcha response", 400);
+			return;
+		}
+
 		unset($required, $v);
 
-		if (!preg_match("/^[a-z\.\'\s]{3,}$/i", $i["name"])) {
+		if (!preg_match("/^[a-z\.\'\s]{3,255}$/i", $i["name"])) {
 			error_api("{$m} Field `name` must be a valid person", 400);
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,}$/i", $i["company_name"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
 			error_api("{$m} Field `company_name` must be a valid company", 400);
+			return;
+		}
+
+		if (!preg_match("/^[\\a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+			error_api("{$m} Field `position` must be a valid position", 400);
+			return;
+		}
+
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
+			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
 			return;
 		}
 
@@ -161,8 +192,8 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if ($c >= 200) {
-			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 200 bytes.", 400);
+		if ($c >= 1024) {
+			error_api("{$m} `problem_desc` is too long. Please provide a description with size less than 1024 bytes.", 400);
 			return;
 		}
 
@@ -185,7 +216,7 @@ class ParticipantRegister implements APIContract
 				"token" => cencrypt(json_encode(
 					[
 						"expired" => $expired,
-						"code" => rstr(32)
+						"code" => rstr(6, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM")
 					]
 				), APP_KEY),
 
