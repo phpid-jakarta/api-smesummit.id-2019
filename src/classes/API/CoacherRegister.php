@@ -12,7 +12,7 @@ use Contracts\APIContract;
  * @license MIT
  * @package \API
  */
-class SponsorRegister implements APIContract
+class CoacherRegister implements APIContract
 {
 	/**
 	 * @var string
@@ -61,7 +61,7 @@ class SponsorRegister implements APIContract
 		if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 			error_api("Method not allowed", 405);
 		}
-
+		
 		$this->captcha = API::validateToken();
 
 		// Validate input
@@ -82,15 +82,17 @@ class SponsorRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :phone, :sponsor_type, :created_at);"
+				"INSERT INTO `participants` (`name`, `company_name`, `position`, `company_sector`, `email`, `phone`, `experience`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :email, :phone, :experience, :created_at);"
 			);
 			$st->execute(
 				[
+					":name" => $i["name"],
 					":company_name" => $i["company_name"],
+					":position" => $i["position"],
 					":company_sector" => $i["company_sector"],
-					":email_pic" => $i["email_pic"],
+					":email" => $i["email"],
 					":phone" => $i["phone"],
-					":sponsor_type" => $i["sponsor_type"],
+					":experience" => $i["experience"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -123,11 +125,16 @@ class SponsorRegister implements APIContract
 	{
 		$m = "Bad Request:";
 		$required = [
+			"name",
 			"company_name",
-			"company_sector",
-			"email_pic",
+			"position",
+			"email",
+			"photo",
+			"last_education",
+			"experience",
 			"phone",
-			"sponsor_type",
+			"company_sector",
+			"topic",
 			"captcha"
 		];
 
@@ -151,18 +158,35 @@ class SponsorRegister implements APIContract
 
 		unset($required, $v);
 
+		if (!preg_match("/^[a-z\.\'\s]{3,255}$/i", $i["name"])) {
+			error_api("{$m} Field `name` must be a valid person", 400);
+			return;
+		}
+
 		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
 			error_api("{$m} Field `company_name` must be a valid company", 400);
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
-			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
+		if (!preg_match("/^[\\a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+			error_api("{$m} Field `position` must be a valid position", 400);
 			return;
 		}
 
-		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
-			error_api("{$m} \"{$i["email_pic"]}\" is not a valid email address", 400);
+		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
+			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
+			return;
+		}
+
+		$c = strlen($i["experience"]);
+
+		if ($c < 20) {
+			error_api("{$m} `experience` is too short. Please provide a description at least 20 bytes.", 400);
+			return;
+		}
+
+		if ($c >= 1024) {
+			error_api("{$m} `experience` is too long. Please provide a description with size less than 1024 bytes.", 400);
 			return;
 		}
 
@@ -171,8 +195,8 @@ class SponsorRegister implements APIContract
 			return;
 		}
 
-		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
-			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
+		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
+			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
 			return;
 		}
 

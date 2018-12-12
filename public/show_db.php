@@ -9,7 +9,7 @@ if (!isset($_GET["table"])) {
 	exit;
 }
 
-if (!in_array($_GET["table"], ["participants"])) {
+if (!in_array($_GET["table"], ["participants", "volunteers", "sponsors", "coachers"])) {
 	header("Content-Type: text/plain");
 	http_response_code(400);
 	print "Invalid table \"{$_GET["table"]}\"";
@@ -53,7 +53,7 @@ $first = $st->fetch(PDO::FETCH_ASSOC);
 </head>
 <body>
 	<center>
-		<a href="?table=<?php print $_GET["table"]; ?>&action=truncate"><button>Reset Table</button></a>
+		<a href="?table=<?php print $_GET["table"]; ?>&amp;action=truncate"><button>Reset Table</button></a>
 		<?php if ($first) { ?>
 			<table border="1" style="border-collapse: collapse; margin-top: 10px;">
 			<thead>
