@@ -53,7 +53,7 @@ $first = $st->fetch(PDO::FETCH_ASSOC);
 </head>
 <body>
 	<center>
-		<a href="?table=<?php print $_GET["table"]; ?>&action=truncate"><button>Reset Table</button></a>
+		<a href="?table=<?php print $_GET["table"]; ?>&amp;action=truncate"><button>Reset Table</button></a>
 		<?php if ($first) { ?>
 			<table border="1" style="border-collapse: collapse; margin-top: 10px;">
 			<thead>
