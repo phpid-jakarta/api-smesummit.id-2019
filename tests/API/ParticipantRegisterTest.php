@@ -5,9 +5,6 @@ namespace tests\API;
 use tests\Curl;
 use PHPUnit\Framework\TestCase;
 
-$arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
-print shell_exec("sh -c {$arg}");
-
 static $testToken = NULL;
 
 /**
@@ -164,6 +161,8 @@ class ParticipantRegisterTest extends TestCase
 	private function submit(array $form): array
 	{
 		global $testToken;
+		$me = json_decode(dencrypt($testToken, APP_KEY), true);
+		$form["captcha"] = $me["code"];
 		$opt = [
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => json_encode($form),

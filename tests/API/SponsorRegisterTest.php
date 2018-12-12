@@ -5,9 +5,6 @@ namespace tests\API;
 use tests\Curl;
 use PHPUnit\Framework\TestCase;
 
-$arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
-print shell_exec("sh -c {$arg}");
-
 static $testToken = NULL;
 
 /**
@@ -17,7 +14,7 @@ static $testToken = NULL;
  * @license MIT
  * @package \test\API
  */
-class ParticipantRegisterTest extends TestCase
+class SponsorRegisterTest extends TestCase
 {	
 	use Curl;
 
@@ -52,18 +49,27 @@ class ParticipantRegisterTest extends TestCase
 				"company_name" => "Tea Inside",
 				"position" => "Founder",
 				"company_sector" => "Chemistry",
-				"email" => "ammarfaizi2@gmail.com",
+				"email_pic" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+				"sponsor_type" => "gold"
 			], true],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "silver"
+			], true],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email_pic" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"sponsor_type" => "platinum"
 			], true]
 		];
 	}
@@ -75,59 +81,41 @@ class ParticipantRegisterTest extends TestCase
 	{
 		return [
 			[[
-				"name" => "!!!!!Ammar Faizi",
-				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"email" => "ammarfaizi2@gmail.com",
-				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			], false, "/Field `name` must be a valid person/"],
-			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "~~PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/Field `company_name` must be a valid company/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianh@ari@gmail.com",
+				"email_pic" => "septianh@ari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/is not a valid email address/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "9999",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/Invalid phone number/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "..."
-			], false, "/`problem_desc` is too short\. Please provide a description at least 20 bytes\./"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => str_repeat("q", 1025)
-			], false, "/`problem_desc` is too long\. Please provide a description with size less than 1024 bytes\./"]
+				"sponsor_type" => "qweqwe"
+			], false, "/is not a valid sponsor type\!/"]
 		];
 	}
 
@@ -164,6 +152,8 @@ class ParticipantRegisterTest extends TestCase
 	private function submit(array $form): array
 	{
 		global $testToken;
+		$me = json_decode(dencrypt($testToken, APP_KEY), true);
+		$form["captcha"] = $me["code"];
 		$opt = [
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => json_encode($form),
