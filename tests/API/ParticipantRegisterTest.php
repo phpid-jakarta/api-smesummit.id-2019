@@ -161,6 +161,8 @@ class ParticipantRegisterTest extends TestCase
 	private function submit(array $form): array
 	{
 		global $testToken;
+		var_dump(dencrypt($testToken, APP_KEY));
+		die;
 		$opt = [
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => json_encode($form),
