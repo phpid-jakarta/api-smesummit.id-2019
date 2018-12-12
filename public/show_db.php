@@ -9,7 +9,7 @@ if (!isset($_GET["table"])) {
 	exit;
 }
 
-if (!in_array($_GET["table"], ["participants"])) {
+if (!in_array($_GET["table"], ["participants", "volunteers", "sponsors", "coachers"])) {
 	header("Content-Type: text/plain");
 	http_response_code(400);
 	print "Invalid table \"{$_GET["table"]}\"";
