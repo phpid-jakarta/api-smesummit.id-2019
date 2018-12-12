@@ -60,7 +60,7 @@ $first = $st->fetch(PDO::FETCH_ASSOC);
 				<tr>
 					<th style="padding: 5px;">No.</th>
 				<?php
-				$f = "<td align=\"center\">1.</td>";
+				$f = "<tr><td align=\"center\">1.</td>";
 				foreach ($first as $key => $value) {
 					$value = htmlspecialchars($value, ENT_QUOTES, "UTF-8");
 					$f .= "<td style=\"padding: 5px;\" align=\"center\">{$value}</td>";
