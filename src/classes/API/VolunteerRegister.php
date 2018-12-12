@@ -148,8 +148,8 @@ class VolunteerRegister implements APIContract
 			return;
 		}
 
-		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
-			error_api("{$m} \"{$i["email_pic"]}\" is not a valid email address", 400);
+		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
+			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
 			return;
 		}
 
