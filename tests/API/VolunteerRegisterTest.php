@@ -117,8 +117,6 @@ class VolunteerRegisterTest extends TestCase
 	{
 		$o = $this->submit($form);
 
-		var_dump($o["out"]);
-
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 
