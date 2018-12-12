@@ -93,7 +93,13 @@ class SponsorRegister implements APIContract
 					":sponsor_type" => $i["sponsor_type"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
-			);	
+			);
+
+			print API::json001("success",
+				[
+					"message" => "register_success"
+				]
+			);
 		} catch (PDOException $e) {
 			// Close PDO connection.
 			$st = $pdo = null;

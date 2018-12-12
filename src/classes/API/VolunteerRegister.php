@@ -92,7 +92,13 @@ class VolunteerRegister implements APIContract
 					":why_you_apply_desc" => $i["why_you_apply_desc"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
-			);	
+			);
+			
+			print API::json001("success",
+				[
+					"message" => "register_success"
+				]
+			);
 		} catch (PDOException $e) {
 			// Close PDO connection.
 			$st = $pdo = null;
