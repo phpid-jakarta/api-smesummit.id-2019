@@ -49,18 +49,27 @@ class SponsorRegisterTest extends TestCase
 				"company_name" => "Tea Inside",
 				"position" => "Founder",
 				"company_sector" => "Chemistry",
-				"email" => "ammarfaizi2@gmail.com",
+				"email_pic" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+				"sponsor_type" => "gold"
 			], true],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "silver"
+			], true],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email_pic" => "septianhari@gmail.com",
+				"phone" => "085123123123",
+				"sponsor_type" => "platinum"
 			], true]
 		];
 	}
@@ -72,59 +81,41 @@ class SponsorRegisterTest extends TestCase
 	{
 		return [
 			[[
-				"name" => "!!!!!Ammar Faizi",
-				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"email" => "ammarfaizi2@gmail.com",
-				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			], false, "/Field `name` must be a valid person/"],
-			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "~~PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/Field `company_name` must be a valid company/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianh@ari@gmail.com",
+				"email_pic" => "septianh@ari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/is not a valid email address/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "9999",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+				"sponsor_type" => "gold"
 			], false, "/Invalid phone number/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
+				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
-				"problem_desc" => "..."
-			], false, "/`problem_desc` is too short\. Please provide a description at least 20 bytes\./"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => str_repeat("q", 1025)
-			], false, "/`problem_desc` is too long\. Please provide a description with size less than 1024 bytes\./"]
+				"sponsor_type" => "qweqwe"
+			], false, "/is not a valid sponsor type\!/"]
 		];
 	}
 
@@ -147,6 +138,8 @@ class SponsorRegisterTest extends TestCase
 	{
 		$o = $this->submit($form);
 
+		var_dump($o["out"]);
+
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 
@@ -161,6 +154,8 @@ class SponsorRegisterTest extends TestCase
 	private function submit(array $form): array
 	{
 		global $testToken;
+		$me = json_decode(dencrypt($testToken, APP_KEY), true);
+		$form["captcha"] = $me["code"];
 		$opt = [
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => json_encode($form),
