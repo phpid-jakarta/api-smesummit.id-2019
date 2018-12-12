@@ -49,7 +49,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "Tea Inside",
 				"position" => "Founder",
 				"company_sector" => "Chemistry",
-				"email_pic" => "ammarfaizi2@gmail.com",
+				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"sponsor_type" => "gold"
 			], true],
@@ -58,7 +58,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianhari@gmail.com",
+				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "silver"
 			], true],
@@ -67,7 +67,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianhari@gmail.com",
+				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "platinum"
 			], true]
@@ -85,7 +85,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "~~PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianhari@gmail.com",
+				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "gold"
 			], false, "/Field `company_name` must be a valid company/"],
@@ -94,7 +94,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianh@ari@gmail.com",
+				"email" => "septianh@ari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "gold"
 			], false, "/is not a valid email address/"],
@@ -103,7 +103,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianhari@gmail.com",
+				"email" => "septianhari@gmail.com",
 				"phone" => "9999",
 				"sponsor_type" => "gold"
 			], false, "/Invalid phone number/"],
@@ -112,7 +112,7 @@ class CoacherRegisterTest extends TestCase
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
-				"email_pic" => "septianhari@gmail.com",
+				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "qweqwe"
 			], false, "/is not a valid sponsor type\!/"]
@@ -140,6 +140,10 @@ class CoacherRegisterTest extends TestCase
 
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
+
+		if ($o["info"]["http_code"] === 200) {
+			$this->uploadPhoto();
+		}
 
 		if (!is_null($mustMatch)) {
 			$this->assertTrue((bool)preg_match($mustMatch, $o["out"]));
