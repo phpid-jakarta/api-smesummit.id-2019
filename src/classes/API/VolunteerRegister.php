@@ -82,15 +82,14 @@ class VolunteerRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :phone, :sponsor_type, :created_at);"
+				"INSERT INTO `volunteers` (`name`, `email`, `phone`, `why_you_apply_desc`, `created_at`) VALUES (:name, :email, :phone, :why_you_apply_desc, :created_at);"
 			);
 			$st->execute(
 				[
-					":company_name" => $i["company_name"],
-					":company_sector" => $i["company_sector"],
-					":email_pic" => $i["email_pic"],
+					":name" => $i["name"],
+					":email" => $i["email"],
 					":phone" => $i["phone"],
-					":sponsor_type" => $i["sponsor_type"],
+					":why_you_apply_desc" => $i["why_you_apply_desc"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);	
@@ -117,11 +116,10 @@ class VolunteerRegister implements APIContract
 	{
 		$m = "Bad Request:";
 		$required = [
-			"company_name",
-			"company_sector",
-			"email_pic",
+			"name",
+			"email",
 			"phone",
-			"sponsor_type",
+			"why_you_apply_desc",
 			"captcha"
 		];
 
@@ -145,13 +143,8 @@ class VolunteerRegister implements APIContract
 
 		unset($required, $v);
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
-			error_api("{$m} Field `company_name` must be a valid company", 400);
-			return;
-		}
-
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
-			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
+		if (!preg_match("/^[a-z\.\'\s]{3,255}$/i", $i["name"])) {
+			error_api("{$m} Field `name` must be a valid person", 400);
 			return;
 		}
 
@@ -165,8 +158,15 @@ class VolunteerRegister implements APIContract
 			return;
 		}
 
-		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
-			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
+		$c = strlen($i["why_you_apply_desc"]);
+
+		if ($c < 20) {
+			error_api("{$m} `why_you_apply_desc` is too short. Please provide a description at least 20 bytes.", 400);
+			return;
+		}
+
+		if ($c >= 1024) {
+			error_api("{$m} `why_you_apply_desc` is too long. Please provide a description with size less than 1024 bytes.", 400);
 			return;
 		}
 
