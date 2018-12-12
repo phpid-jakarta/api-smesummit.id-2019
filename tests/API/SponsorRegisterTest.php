@@ -5,9 +5,6 @@ namespace tests\API;
 use tests\Curl;
 use PHPUnit\Framework\TestCase;
 
-$arg = escapeshellarg(PHP_BINARY." ".BASEPATH."/server.php >> /dev/null 2>&1 &");
-print shell_exec("sh -c {$arg}");
-
 static $testToken = NULL;
 
 /**
@@ -17,7 +14,7 @@ static $testToken = NULL;
  * @license MIT
  * @package \test\API
  */
-class ParticipantRegisterTest extends TestCase
+class SponsorRegisterTest extends TestCase
 {	
 	use Curl;
 
