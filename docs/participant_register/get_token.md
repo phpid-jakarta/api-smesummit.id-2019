@@ -6,8 +6,13 @@
 https://api.smesummit.id/participant_register.php?action=get_token
 ```
 
+### HTTP Method
+```
+GET
+```
+
 ### Kegunaan
-`get_token` digunakan untuk menggenerate sebuah token yang nantinya akan dipakai untuk submit data.
+Method `get_token` pada participant_register digunakan untuk menggenerate sebuah token yang akan dipakai untuk mengambil captcha dan mengirim data para peserta yang mendaftar.
 
 
 ### Contoh Response Body
