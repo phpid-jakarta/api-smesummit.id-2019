@@ -5,8 +5,6 @@ namespace tests;
 /**
  * Trait ini digunakan untuk menambahkan method curl.
  *
- * @link https://en.wikipedia.org/wiki/Singleton_pattern
- *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
  * @package \test

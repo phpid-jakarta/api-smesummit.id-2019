@@ -96,7 +96,6 @@ class CoacherRegister implements APIContract
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
-
 			print API::json001("success",
 				[
 					"message" => "register_success"
