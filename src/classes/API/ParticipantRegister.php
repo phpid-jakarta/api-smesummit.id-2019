@@ -180,8 +180,16 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
-			error_api("{$m} Invalid phone number", 400);	
+		if (
+			preg_match("/^[0-9\-\+]*$/", $i["phone"]) && 
+			(!preg_match("/^[0\+]\d{4,13}$/", str_replace("-", "", $i["phone"])))
+		) {
+			error_api("{$m} Invalid phone number.", 400);	
+			return;
+		}
+
+		if (!preg_match("/^\@/", $i["phone"])) {
+			error_api("{$m} Invalid telegram username: Telegram username must be started with '@' or enter your phone number instead", 400);
 			return;
 		}
 

@@ -24,7 +24,7 @@ if (!defined("__INIT")) {
 	header("Access-Control-Allow-Origin: https://www.smesummit.id");
 	header("Access-Control-Allow-Headers: authorization,content-type");
 
-	if (in_array($_SERVER["REQUEST_METHOD"], ["OPTIONS", "HEAD"])) {
+	if (isset($_SERVER["REQUEST_METHOD"]) && in_array($_SERVER["REQUEST_METHOD"], ["OPTIONS", "HEAD"])) {
 		http_response_code(200);
 		exit;
 	}

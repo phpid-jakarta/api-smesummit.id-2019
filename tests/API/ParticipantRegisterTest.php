@@ -113,6 +113,15 @@ class ParticipantRegisterTest extends TestCase
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
 				"email" => "septianhari@gmail.com",
+				"phone" => "avavav",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid telegram username: Telegram username must be started with /"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"problem_desc" => "..."
 			], false, "/`problem_desc` is too short\. Please provide a description at least 20 bytes\./"],
