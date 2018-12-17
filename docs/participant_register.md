@@ -16,16 +16,16 @@ https://api.smesummit.id/participant_register.php
 
 ### 2.1 get_token
 
-#### Endpoint
+#### 2.1.1 Endpoint
 ```
 https://api.smesummit.id/participant_register.php?action=get_token
 ```
 
-#### Kegunaan
+#### 2.1.2 Kegunaan
 `get_token` digunakan untuk menggenerate sebuah token yang nantinya akan dipakai untuk submit data.
 
 
-#### Contoh Response Body
+#### 2.1.3 Contoh Response Body
 ```json
 {
     "status": "success",
@@ -36,7 +36,7 @@ https://api.smesummit.id/participant_register.php?action=get_token
 }
 ```
 
-#### Curl Example
+#### 2.1.4 Curl Example
 ```
 curl https://api.smesummit.id/participant_register.php?action=get_token
 ```
