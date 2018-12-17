@@ -4,7 +4,7 @@
 
 ## 1. API Endpoint
 ```
-https://api-smesummit.ammarfaizi2.net/register_participant.php
+https://api.smesummit.id/participant_register.php
 ```
 
 ## 2. Daftar Method yang Tersedia
@@ -16,10 +16,10 @@ https://api-smesummit.ammarfaizi2.net/register_participant.php
 
 #### 2.1 get_token
 ```
-https://api-smesummit.ammarfaizi2.net/register_participant.php?action=get_token
+https://api.smesummit.id/participant_register.php?action=get_token
 ```
 
 #### 2.2 submit
 ```
-https://api-smesummit.ammarfaizi2.net/register_participant.php?action=submit
+https://api.smesummit.id/participant_register.php?action=submit
 ```
