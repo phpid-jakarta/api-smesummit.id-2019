@@ -11,7 +11,7 @@ https://api.smesummit.id/participant_register.php
 |No.| Nama Method | HTTP Method |
 |---|-------------|-------------|
 |1.|<a href="#21-get_token">get_token</a>|GET|
-|2.|submit|POST|
+|2.|<a href="#22-submit">submit</a>|POST|
 
 
 #### 2.1 get_token
