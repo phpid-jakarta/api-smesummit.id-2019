@@ -15,8 +15,23 @@ https://api.smesummit.id/participant_register.php
 
 
 #### 2.1 get_token
+
+`get_token` digunakan untuk menggenerate sebuah token yang nantinya akan dipakai untuk submit data.
+
+
 ```
 https://api.smesummit.id/participant_register.php?action=get_token
+```
+
+##### Contoh Response Body
+```json
+{
+    "status": "success",
+    "data": {
+        "token": "OOaO7Uf0xPheV20g0m8Hfg5QzbNH9KLNQMjiw3dJN0OaF3UpKx7KzXOm",
+        "expired": 1545060763
+    }
+}
 ```
 
 #### 2.2 submit
