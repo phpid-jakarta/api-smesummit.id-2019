@@ -54,12 +54,39 @@ class ParticipantRegisterTest extends TestCase
 				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
 			], true],
 			[[
+				"name" => "Ammar Faizi",
+				"company_name" => "Tea Inside",
+				"position" => "Founder",
+				"company_sector" => "Chemistry",
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "@ammarfaizi2",
+				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+			], true],
+			[[
+				"name" => "Ammar Faizi",
+				"company_name" => "Tea Inside",
+				"position" => "Founder",
+				"company_sector" => "Chemistry",
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "@ammar_faizi2",
+				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+			], true],
+			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
 				"position" => "Founder",
 				"company_sector" => "Food and Drink",
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], true],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "@liqrgv",
 				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
 			], true]
 		];
@@ -107,6 +134,42 @@ class ParticipantRegisterTest extends TestCase
 				"phone" => "9999",
 				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
 			], false, "/Invalid phone number/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "avavav",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid telegram username: Telegram username must be started with /"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "@_liqrgv",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid telegram username/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "@liqrgv_",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid telegram username/"],
+			[[
+				"name" => "Septian Hari Nugroho",
+				"company_name" => "PHP LTM Group",
+				"position" => "Founder",
+				"company_sector" => "Food and Drink",
+				"email" => "septianhari@gmail.com",
+				"phone" => "@liqrgv_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
+			], false, "/Invalid telegram username/"],
 			[[
 				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",

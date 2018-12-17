@@ -166,10 +166,22 @@ class SponsorRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
-			error_api("{$m} Invalid phone number", 400);	
-			return;
-		}
+		if (preg_match("/^[0-9\-\+]*$/", $i["phone"])) {
+			if (!preg_match("/^[0\+]\d{4,13}$/", str_replace("-", "", $i["phone"]))) {
+				error_api("{$m} Invalid phone number.", 400);	
+				return;
+			}
+		} else {
+			if (!preg_match("/^\@/", $i["phone"])) {
+				error_api("{$m} Invalid telegram username: Telegram username must be started with '@' or enter your phone number instead", 400);
+				return;
+			}
+
+			if (!preg_match("/^\@[a-z0-9][a-z0-9\_]{3,25}[a-z0-9]$/i", $i["phone"])) {
+				error_api("{$m} Invalid telegram username", 400);
+				return;
+			}
+		}		
 
 		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
 			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
