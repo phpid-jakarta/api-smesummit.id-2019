@@ -24,6 +24,6 @@ Method `submit` digunakan untuk mengirimkan data peserta yang hendak mendaftar.
 |4. |`company_sector`| string |`/^[a-z0-9\-\.\'\s]{3,255}$/i`| Sektor perusahaan. |
 |5. |`coached_sector`| string |`/^[a-z0-9\-\.\'\s]{3,255}$/i`| Sektor yang hendak dipelajari (bener nggak sih?, CC @mazipan). |
 |6. |`email`| string |`filter_var($i["email"], FILTER_VALIDATE_EMAIL)`|Email peserta. |
-|7. |`phone`| string | Nomor HP peserta. |
-|8. |`problem_desc`| string | Deskripsi masalah yang dihadapi. |
-|9. |`captcha`| string | Input captcha (baca di sini) |
+|7. |`phone`| string |`/^[0\+]\d{4,13}$/` or `/^\@[a-z0-9][a-z0-9\_]{3,25}[a-z0-9]$/i`| Nomor HP atau Username Telegram peserta. |
+|8. |`problem_desc`| string |`/.{20,1024}/`| Deskripsi masalah yang dihadapi. |
+|9. |`captcha`| string |`/[a-z0-9]/i`| Input captcha (baca di sini) |
