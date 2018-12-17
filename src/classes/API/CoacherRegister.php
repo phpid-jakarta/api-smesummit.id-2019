@@ -128,7 +128,6 @@ class CoacherRegister implements APIContract
 			"company_name",
 			"position",
 			"email",
-			"photo",
 			"last_education",
 			"experience",
 			"phone",

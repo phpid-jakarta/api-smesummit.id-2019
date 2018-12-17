@@ -155,7 +155,7 @@ class ParticipantRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
-
+		
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 
