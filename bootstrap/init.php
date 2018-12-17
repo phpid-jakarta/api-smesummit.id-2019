@@ -21,5 +21,11 @@ if (!defined("__INIT")) {
 
 	require BASEPATH."/src/helpers.php";
 	header("Content-Type: application/json");
-	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Origin: https://www.smesummit.id");
+	header("Access-Control-Allow-Headers: authorization,content-type");
+
+	if (in_array($_SERVER["REQUEST_METHOD"], ["OPTIONS", "HEAD"])) {
+		http_response_code(200);
+		exit;
+	}
 }
