@@ -39,6 +39,7 @@ CREATE TABLE `participants` (
   `name` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL,
+  `coached_sector` varchar(255) NOT NULL,
   `company_sector` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
@@ -88,4 +89,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-06 05:38:48
+-- 2018-12-17 14:22:22
