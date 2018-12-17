@@ -27,6 +27,6 @@ curl https://api.smesummit.id/participant_register.php?action=get_token
 ```
 
 ### Contoh code tentang get_token dapat dilihat di test case berikut ini
-<a href="https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/master/tests/API/ParticipantRegisterTest.php#L24-L39">https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/docs/tests/API/ParticipantRegisterTest.php</a>
+<a href="https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/master/tests/API/ParticipantRegisterTest.php#L24-L39">https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/master/tests/API/ParticipantRegisterTest.php#L24-L39</a>
 
 #### <a href="https://github.com/phpid-jakarta/api-smesummit.id-2019/blob/docs/docs/participant_register.md">Kembali ke participant_register.md</a>
