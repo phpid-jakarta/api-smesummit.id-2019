@@ -23,7 +23,7 @@ if (!defined("__INIT")) {
 	header("Content-Type: application/json");
 	// header("Access-Control-Allow-Origin: *");
 
-	if ($_SERVER["REQUEST_METHOD"] === "HEAD") {
+	if (in_array($_SERVER["REQUEST_METHOD"], ["OPTIONS", "HEAD"])) {
 		http_response_code(200);
 		exit;
 	}
