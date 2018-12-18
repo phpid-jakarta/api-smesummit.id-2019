@@ -13,7 +13,7 @@ CREATE TABLE `coachers` (
   `position` varchar(64) NOT NULL,
   `email` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
-  `latest_education` varchar(64) NOT NULL,
+  `last_education` varchar(64) NOT NULL,
   `experience` text NOT NULL,
   `phone` varchar(32) NOT NULL,
   `company_sector` varchar(32) NOT NULL,
@@ -25,11 +25,11 @@ CREATE TABLE `coachers` (
   KEY `position` (`position`),
   KEY `email` (`email`),
   KEY `photo` (`photo`),
-  KEY `latest_education` (`latest_education`),
+  KEY `latest_education` (`last_education`),
   KEY `phone` (`phone`),
   KEY `company_sector` (`company_sector`),
-  FULLTEXT KEY `experience` (`experience`),
-  FULLTEXT KEY `topic` (`topic`)
+  KEY `topic` (`topic`),
+  FULLTEXT KEY `experience` (`experience`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -52,6 +52,34 @@ CREATE TABLE `participants` (
   KEY `company_sector` (`company_sector`),
   KEY `email` (`email`),
   FULLTEXT KEY `problem_desc` (`problem_desc`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `speaker`;
+CREATE TABLE `speaker` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `position` varchar(64) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  `last_education` varchar(64) NOT NULL,
+  `experience` text NOT NULL,
+  `phone` varchar(32) NOT NULL,
+  `company_sector` varchar(32) NOT NULL,
+  `topic` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`),
+  KEY `company_name` (`company_name`),
+  KEY `position` (`position`),
+  KEY `email` (`email`),
+  KEY `photo` (`photo`),
+  KEY `last_education` (`last_education`),
+  KEY `topic` (`topic`),
+  KEY `company_sector` (`company_sector`),
+  KEY `phone` (`phone`),
+  FULLTEXT KEY `experience` (`experience`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -89,4 +117,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-17 14:22:22
+-- 2018-12-18 06:57:29

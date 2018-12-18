@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 static $testToken = NULL;
 
 /**
- * Class ini digunakan untuk mengetest API /participant_register.php
+ * Class ini digunakan untuk mengetest API /sponsor_register.php
  *
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
