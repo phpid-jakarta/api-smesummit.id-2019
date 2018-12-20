@@ -209,6 +209,30 @@ class SpeakerRegisterTest extends TestCase
 				"sector" => "~Industry",
 				"topic" => "PHP Unit"
 			], false, "/Field \`sector\` must be a valid sector/"],
+			[[
+				"name" => "Ammar Faizi",
+				"company_name" => "Tea Inside",
+				"position" => "Owner",
+				"email" => "ammarfaizi2@gmail.com",
+				"photo" => "https://www.site.com/photo.jpg",
+				"last_education" => "Chemical engineering ITB",
+				"experience" => "I have been developed a messenger platform with high security encryption",
+				"phone" => "@ammarfaizi2",
+				"sector" => "Industry",
+				"topic" => "PHP"
+			], false, "/\`topic\` is too short\. Please provide a topic at least /"],
+			[[
+				"name" => "Ammar Faizi",
+				"company_name" => "Tea Inside",
+				"position" => "Owner",
+				"email" => "ammarfaizi2@gmail.com",
+				"photo" => "https://www.site.com/photo.jpg",
+				"last_education" => "Chemical engineering ITB",
+				"experience" => "I have been developed a messenger platform with high security encryption",
+				"phone" => "@ammarfaizi2",
+				"sector" => "Industry",
+				"topic" => str_repeat("qcc", 2000),
+			], false, "/\`topic\` is too long. Please provide a topic with/"],
 		];
 	}
 

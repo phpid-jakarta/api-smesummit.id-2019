@@ -214,6 +214,18 @@ class SpeakerRegister implements APIContract
 			return;
 		}
 
+		$c = strlen($i["topic"]);
+
+		if ($c < 5) {
+			error_api("{$m} `topic` is too short. Please provide a topic at least 5 bytes.", 400);
+			return;
+		}
+
+		if ($c >= 1024) {
+			error_api("{$m} `topic` is too long. Please provide a topic with size less than 1024 bytes.", 400);
+			return;
+		}
+
 		unset($c, $i);
 		return;
 	}
