@@ -170,7 +170,7 @@ class SpeakerRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[\\a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+		if (!preg_match("/^[2a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
 			error_api("{$m} Field `position` must be a valid position", 400);
 			return;
 		}
@@ -209,7 +209,7 @@ class SpeakerRegister implements APIContract
 			}
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["sector"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s\&\_\/]{3,255}$/i", $i["sector"])) {
 			error_api("{$m} Field `sector` must be a valid sector", 400);
 			return;
 		}
