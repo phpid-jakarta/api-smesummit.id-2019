@@ -47,53 +47,27 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"coached_sector" => "Digital Marketing",
+				"position" => "Owner",
 				"email" => "ammarfaizi2@gmail.com",
+				"photo" => "https://www.site.com/photo.jpg",
+				"last_education" => "Chemical engineering ITB",
+				"experience" => "I have been developed a messenger platform with high security encryption",
 				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+				"sector" => "Industry",
+				"topic" => "PHP Unit"
 			], true],
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"coached_sector" => "Digital Marketing",
+				"position" => "Owner",
 				"email" => "ammarfaizi2@gmail.com",
+				"photo" => "https://www.site.com/photo.jpg",
+				"last_education" => "Chemical engineering ITB",
+				"experience" => "I have been developed a messenger platform with high security encryption",
 				"phone" => "@ammarfaizi2",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
+				"sector" => "Industry",
+				"topic" => "PHP Unit"
 			], true],
-			[[
-				"name" => "Ammar Faizi",
-				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"coached_sector" => "Digital Marketing",
-				"email" => "ammarfaizi2@gmail.com",
-				"phone" => "@ammar_faizi2",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			], true],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], true],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "@liqrgv",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], true]
 		];
 	}
 
@@ -103,106 +77,6 @@ class SpeakerRegisterTest extends TestCase
 	private function invalidInput(): array
 	{
 		return [
-			[[
-				"name" => "!!!!!Ammar Faizi",
-				"company_name" => "Tea Inside",
-				"position" => "Founder",
-				"company_sector" => "Chemistry",
-				"coached_sector" => "Digital Marketing",
-				"email" => "ammarfaizi2@gmail.com",
-				"phone" => "085867152777",
-				"problem_desc" => "blablablah aaaa bbbb cccc dddd eeee ffff"
-			], false, "/Field `name` must be a valid person/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "~~PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Field `company_name` must be a valid company/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianh@ari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/is not a valid email address/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "9999",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid phone number/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "avavav",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid telegram username: Telegram username must be started with /"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "@_liqrgv",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid telegram username/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "@liqrgv_",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid telegram username/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "@liqrgv_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-				"problem_desc" => "nganu abc qwe asd zxc asd qwe ert dfg cvb"
-			], false, "/Invalid telegram username/"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => "..."
-			], false, "/`problem_desc` is too short\. Please provide a description at least 20 bytes\./"],
-			[[
-				"name" => "Septian Hari Nugroho",
-				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
-				"company_sector" => "Food and Drink",
-				"coached_sector" => "Digital Marketing",
-				"email" => "septianhari@gmail.com",
-				"phone" => "085123123123",
-				"problem_desc" => str_repeat("q", 1025)
-			], false, "/`problem_desc` is too long\. Please provide a description with size less than 1024 bytes\./"]
 		];
 	}
 
@@ -224,7 +98,7 @@ class SpeakerRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
-
+		// var_dump($o["out"]);
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 
