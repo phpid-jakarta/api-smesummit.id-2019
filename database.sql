@@ -98,6 +98,9 @@ CREATE TABLE `speakers` (
   FULLTEXT KEY `topic` (`topic`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `speakers` (`id`, `name`, `company_name`, `position`, `email`, `photo`, `last_education`, `experience`, `phone`, `sector`, `topic`, `fb_link`, `twitter_link`, `instagram_link`, `promoted`, `created_at`) VALUES
+(1, 'Ken Ratri Iswari', 'Geekhunter', 'Founder & CEO Geekhunter', NULL, 'https://www.smesummit.id/images/speaker/ken-ratri-iswari.jpeg',  NULL, NULL, NULL, 'Human Asset Sector', NULL, 'https://www.facebook.com/kenratriiswari',  'https://twitter.com/kenratriiswari', 'https://www.instagram.com/kenratriiswari/',  '1',  '2018-12-21 20:40:42'),
+(2, 'Rendy Maulana',  'Qwords', 'CEO of Qwords',  NULL, 'https://www.smesummit.id/images/speaker/rendy-maulana.jpeg', NULL, NULL, NULL, 'Regulation Sector',  NULL, 'https://www.facebook.com/rendy.maulana', '', 'https://www.linkedin.com/in/rendy/', '1',  '2018-12-21 20:41:21');
 
 DROP TABLE IF EXISTS `sponsors`;
 CREATE TABLE `sponsors` (
@@ -133,4 +136,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-21 13:30:54
+-- 2018-12-21 13:41:45
