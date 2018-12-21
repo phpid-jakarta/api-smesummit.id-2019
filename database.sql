@@ -33,6 +33,18 @@ CREATE TABLE `coachers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+DROP TABLE IF EXISTS `faq`;
+CREATE TABLE `faq` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question` text NOT NULL,
+  `answer` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `faq` (`id`, `question`, `answer`) VALUES
+(1, 'What is <b>SME Summit</b>?', 'SME Summit 2019 is a conference and mentoring panel session organized by PHP Indonesia which aims to help the technological transformation in non-tech companies, small and medium enterprises and traditional companies, shift the paradigm that IT division is only as a support division in the company into a profit-center division and helping to transform your stagnant companies into exponential growth companies.'),
+(2, 'I am a question blablabla blablabla?', 'I am the answer <b>qweqweqwe</b>');
+
 DROP TABLE IF EXISTS `participants`;
 CREATE TABLE `participants` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -121,4 +133,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-21 10:53:13
+-- 2018-12-21 13:30:54
