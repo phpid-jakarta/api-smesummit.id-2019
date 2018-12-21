@@ -67,7 +67,11 @@ CREATE TABLE `speakers` (
   `experience` text,
   `phone` varchar(32) DEFAULT NULL,
   `sector` varchar(32) DEFAULT NULL,
-  `topic` varchar(1024) DEFAULT NULL,
+  `topic` text,
+  `fb_link` varchar(255) DEFAULT NULL,
+  `twitter_link` varchar(255) DEFAULT NULL,
+  `instagram_link` varchar(255) DEFAULT NULL,
+  `promoted` enum('0','1') NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
@@ -76,10 +80,10 @@ CREATE TABLE `speakers` (
   KEY `email` (`email`),
   KEY `photo` (`photo`),
   KEY `last_education` (`last_education`),
-  KEY `topic` (`topic`),
   KEY `company_sector` (`sector`),
   KEY `phone` (`phone`),
-  FULLTEXT KEY `experience` (`experience`)
+  FULLTEXT KEY `experience` (`experience`),
+  FULLTEXT KEY `topic` (`topic`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -117,4 +121,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2018-12-20 06:15:41
+-- 2018-12-21 10:53:13
