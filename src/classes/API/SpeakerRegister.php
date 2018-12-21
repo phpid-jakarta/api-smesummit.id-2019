@@ -91,7 +91,7 @@ class SpeakerRegister implements APIContract
 					":position" => $i["position"],
 					":email" => $i["email"],
 					":photo" => $i["photo"],
-					":last_education" => $i["photo"],
+					":last_education" => $i["last_education"],
 					":experience" => $i["experience"],
 					":phone" => $i["phone"],
 					":sector" => $i["sector"],
