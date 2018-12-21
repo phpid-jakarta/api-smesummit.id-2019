@@ -47,7 +47,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -59,7 +59,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -71,7 +71,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -83,7 +83,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -104,7 +104,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "~~Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -116,7 +116,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "~~Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -128,7 +128,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "!!!Owner",
+				"position" => "blablba",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -140,7 +140,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfa@izi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -152,7 +152,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -164,7 +164,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -176,7 +176,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -188,7 +188,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -200,7 +200,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -212,7 +212,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -224,7 +224,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Owner",
+				"position" => "DIREKTUR UTAMA",
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
