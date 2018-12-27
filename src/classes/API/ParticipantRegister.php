@@ -172,7 +172,7 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s\/\,]{3,255}$/i", $i["company_sector"])) {
 			error_api("{$m} Field `company_sector` must be a valid sector", 400);
 			return;
 		}
