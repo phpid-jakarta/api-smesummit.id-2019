@@ -82,15 +82,15 @@ class ParticipantRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `coached_sector`, `position`, `company_sector`, `email`, `phone`, `problem_desc`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :coached_sector, :email, :phone, :problem_desc, :created_at);"
+				"INSERT INTO `participants` (`name`,`company_name`,`coached_sector`,`position`,`company_sector`,`email`,`phone`,`problem_desc`,`created_at`) VALUES (:name,:company_name,:coached_sector,:position,:company_sector,:email,:phone,:problem_desc,:created_at);"
 			);
 			$st->execute(
 				[
 					":name" => $i["name"],
 					":company_name" => $i["company_name"],
+					":coached_sector" => $i["coached_sector"],
 					":position" => $i["position"],
 					":company_sector" => $i["company_sector"],
-					":coached_sector" => $i["coached_sector"],
 					":email" => $i["email"],
 					":phone" => $i["phone"],
 					":problem_desc" => $i["problem_desc"],
@@ -177,10 +177,10 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["coached_sector"])) {
-			error_api("{$m} Field `coached_sector` must be a valid sector", 400);
-			return;
-		}
+		// if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["coached_sector"])) {
+		// 	error_api("{$m} Field `coached_sector` must be a valid sector", 400);
+		// 	return;
+		// }
 
 		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);

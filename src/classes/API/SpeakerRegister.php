@@ -170,22 +170,22 @@ class SpeakerRegister implements APIContract
 			return;
 		}
 
-		$positions_enum = json_decode(file_get_contents(BASEPATH."/public/positions.json"), true);
-		if (!is_array($positions_enum)) {
-			error_api(
-				sprintf("Positions enum cannot be loaded properly %s", 
-					BASEPATH."/public/positions.json"
-				), 
-				500
-			);
-			return;
-		}
+		// $positions_enum = json_decode(file_get_contents(BASEPATH."/public/positions.json"), true);
+		// if (!is_array($positions_enum)) {
+		// 	error_api(
+		// 		sprintf("Positions enum cannot be loaded properly %s", 
+		// 			BASEPATH."/public/positions.json"
+		// 		), 
+		// 		500
+		// 	);
+		// 	return;
+		// }
 
-		if (!in_array($i["position"], $positions_enum)) {
-			error_api("{$m} Field `position` must be a valid position", 400);
-			return;
-		}
-		unset($positions_enum);
+		// if (!in_array($i["position"], $positions_enum)) {
+		// 	error_api("{$m} Field `position` must be a valid position", 400);
+		// 	return;
+		// }
+		// unset($positions_enum);
 
 		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
