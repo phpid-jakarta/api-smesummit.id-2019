@@ -6,5 +6,6 @@
 *.lock
 /vendor/
 /.phpintel/
+/tmp_backup/
 /public/adminer.php
 /public/*-github-webhook.php
