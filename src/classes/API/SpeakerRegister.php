@@ -171,6 +171,7 @@ class SpeakerRegister implements APIContract
 		}
 
 		// $positions_enum = json_decode(file_get_contents(BASEPATH."/public/positions.json"), true);
+		
 		// if (!is_array($positions_enum)) {
 		// 	error_api(
 		// 		sprintf("Positions enum cannot be loaded properly %s", 
@@ -185,7 +186,20 @@ class SpeakerRegister implements APIContract
 		// 	error_api("{$m} Field `position` must be a valid position", 400);
 		// 	return;
 		// }
+
+
+
 		// unset($positions_enum);
+
+		$c = strlen($i["position"]);
+
+		if ($c < 4) {
+			error_api("{$m} `position` field is not a valid position (too short)");
+		}
+
+		if ($c > 100) {
+			error_api("{$m} `position` field is not a valid position (too long)", 400);
+		}
 
 		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);

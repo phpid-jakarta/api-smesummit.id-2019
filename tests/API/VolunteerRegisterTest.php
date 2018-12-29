@@ -46,12 +46,14 @@ class VolunteerRegisterTest extends TestCase
 		return [
 			[[
 				"name" => "Ammar Faizi",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"why_you_apply_desc" => "I want to blabla qqqq bbbb"
 			], true],
 			[[
 				"name" => "Septian Hari Nugroho",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"why_you_apply_desc" => "I want to blabla qqqq bbbb"
@@ -67,30 +69,35 @@ class VolunteerRegisterTest extends TestCase
 		return [
 			[[
 				"name" => "~~~ ```",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"why_you_apply_desc" => "I want to blabla qqqq bbbb"
 			], false, "/Field \`name\` must be a valid person/"],
 			[[
 				"name" => "Septian Hari Nugroho",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "sep@tianhari@gmail.com",
 				"phone" => "085123123123",
 				"why_you_apply_desc" => "I want to blabla qqqq bbbb"
 			], false, "/is not a valid email address/"],
 			[[
 				"name" => "Septian Hari Nugroho",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "septianhari@gmail.com",
 				"phone" => "123123",
 				"why_you_apply_desc" => "I want to blabla qqqq bbbb"
 			], false, "/Invalid phone number/"],
 			[[
 				"name" => "Septian Hari Nugroho",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"why_you_apply_desc" => "I want to nganu"
 			], false, "/\`why_you_apply_desc\` is too short\./"],
 			[[
 				"name" => "Septian Hari Nugroho",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"email" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"why_you_apply_desc" => "I want to nganu ".str_repeat("blabla", 1024)

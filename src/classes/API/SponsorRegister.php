@@ -194,7 +194,7 @@ class SponsorRegister implements APIContract
 			}
 		}		
 
-		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
+		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold", "media_partner"])) {
 			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
 			return;
 		}
