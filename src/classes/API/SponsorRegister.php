@@ -161,6 +161,14 @@ class SponsorRegister implements APIContract
 			return;
 		}
 
+		if (filter_var($i["company_logo"], FILTER_VALIDATE_URL)) {
+			error_api("{$m} `company_logo` must be a valid URL");
+		}
+
+		if (strlen($i["company_logo"]) > 255) {
+			
+		}
+
 		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email_pic"]}\" is not a valid email address", 400);
 			return;
