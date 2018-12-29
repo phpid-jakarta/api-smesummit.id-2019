@@ -82,7 +82,7 @@ class SponsorRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :phone, :sponsor_type, :created_at);"
+				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `company_logo`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :company_logo, :phone, :sponsor_type, :created_at);"
 			);
 			$st->execute(
 				[
@@ -125,6 +125,7 @@ class SponsorRegister implements APIContract
 		$required = [
 			"company_name",
 			"company_sector",
+			"company_logo",
 			"email_pic",
 			"phone",
 			"sponsor_type",
@@ -163,10 +164,12 @@ class SponsorRegister implements APIContract
 
 		if (filter_var($i["company_logo"], FILTER_VALIDATE_URL)) {
 			error_api("{$m} `company_logo` must be a valid URL");
+			return;
 		}
 
 		if (strlen($i["company_logo"]) > 255) {
-			
+			error_api("{$m} `company_logo` is too long, please provide a company_logo URL less than 255 bytes.");	
+			return;
 		}
 
 		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
