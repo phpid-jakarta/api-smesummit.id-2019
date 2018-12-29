@@ -46,6 +46,7 @@ class SponsorRegisterTest extends TestCase
 		return [
 			[[
 				"company_name" => "Tea Inside",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Chemistry",
 				"email_pic" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
@@ -53,6 +54,7 @@ class SponsorRegisterTest extends TestCase
 			], true],
 			[[
 				"company_name" => "PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -60,6 +62,7 @@ class SponsorRegisterTest extends TestCase
 			], true],
 			[[
 				"company_name" => "PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -76,6 +79,7 @@ class SponsorRegisterTest extends TestCase
 		return [
 			[[
 				"company_name" => "~~PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -83,6 +87,7 @@ class SponsorRegisterTest extends TestCase
 			], false, "/Field `company_name` must be a valid company/"],
 			[[
 				"company_name" => "PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianh@ari@gmail.com",
 				"phone" => "085123123123",
@@ -90,6 +95,7 @@ class SponsorRegisterTest extends TestCase
 			], false, "/is not a valid email address/"],
 			[[
 				"company_name" => "PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "9999",
@@ -97,6 +103,7 @@ class SponsorRegisterTest extends TestCase
 			], false, "/Invalid phone number/"],
 			[[
 				"company_name" => "PHP LTM Group",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -123,6 +130,8 @@ class SponsorRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
+
+		var_dump($o["out"]);
 
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));

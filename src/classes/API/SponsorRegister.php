@@ -88,6 +88,7 @@ class SponsorRegister implements APIContract
 				[
 					":company_name" => $i["company_name"],
 					":company_sector" => $i["company_sector"],
+					":company_logo" => $i["company_logo"],
 					":email_pic" => $i["email_pic"],
 					":phone" => $i["phone"],
 					":sponsor_type" => $i["sponsor_type"],
@@ -162,8 +163,8 @@ class SponsorRegister implements APIContract
 			return;
 		}
 
-		if (filter_var($i["company_logo"], FILTER_VALIDATE_URL)) {
-			error_api("{$m} `company_logo` must be a valid URL");
+		if (!filter_var($i["company_logo"], FILTER_VALIDATE_URL)) {
+			error_api("{$m} `company_logo` must be a valid URL", 400);
 			return;
 		}
 
