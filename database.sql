@@ -12,14 +12,14 @@ CREATE TABLE `coachers` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `company_name` varchar(255) NOT NULL,
-  `position` varchar(64) NOT NULL,
+  `position` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `last_education` varchar(64) NOT NULL,
   `experience` text NOT NULL,
   `phone` varchar(32) NOT NULL,
-  `sector` varchar(32) NOT NULL,
-  `topic` varchar(255) NOT NULL,
+  `sector` varchar(255) NOT NULL,
+  `topic` text NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
@@ -30,7 +30,7 @@ CREATE TABLE `coachers` (
   KEY `latest_education` (`last_education`),
   KEY `phone` (`phone`),
   KEY `company_sector` (`sector`),
-  KEY `topic` (`topic`),
+  KEY `topic` (`topic`(255)),
   FULLTEXT KEY `experience` (`experience`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -104,8 +104,9 @@ CREATE TABLE `sponsors` (
   `company_name` varchar(255) NOT NULL,
   `company_sector` varchar(255) NOT NULL,
   `email_pic` varchar(255) NOT NULL,
+  `company_logo` varchar(255) NOT NULL,
   `phone` varchar(32) NOT NULL,
-  `sponsor_type` enum('platinum','gold','silver') NOT NULL,
+  `sponsor_type` enum('platinum','gold','silver','media_partner') NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `company_name` (`company_name`),
@@ -132,4 +133,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2018-12-29 08:38:00
+-- 2018-12-29 09:26:44
