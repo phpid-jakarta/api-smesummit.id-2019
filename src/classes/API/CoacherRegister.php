@@ -82,17 +82,20 @@ class CoacherRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `position`, `company_sector`, `email`, `phone`, `experience`, `created_at`) VALUES (:name, :company_name, :position, :company_sector, :email, :phone, :experience, :created_at);"
+				"INSERT INTO `coachers` (`name`, `company_name`, `position`, `email`, `photo`, `last_education`, `experience`, `phone`, `sector`, `topic`, `created_at`) VALUES (:name, :company_name, :position, :email, :photo, :last_education, :experience, :phone, :sector, :topic, :created_at);"
 			);
 			$st->execute(
 				[
 					":name" => $i["name"],
 					":company_name" => $i["company_name"],
 					":position" => $i["position"],
-					":company_sector" => $i["company_sector"],
 					":email" => $i["email"],
-					":phone" => $i["phone"],
+					":photo" => $i["photo"],
+					":last_education" => $i["last_education"],
 					":experience" => $i["experience"],
+					":phone" => $i["phone"],
+					":sector" => $i["company_sector"],
+					":topic" => $i["topic"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -128,6 +131,7 @@ class CoacherRegister implements APIContract
 			"company_name",
 			"position",
 			"email",
+			"photo",
 			"last_education",
 			"experience",
 			"phone",
@@ -161,18 +165,35 @@ class CoacherRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_name"])) {
+		if (!preg_match("/^[a-z0-9\-\.\'\s\&]{3,255}$/i", $i["company_name"])) {
 			error_api("{$m} Field `company_name` must be a valid company", 400);
 			return;
 		}
 
-		if (!preg_match("/^[\\a-z0-9\-\.\'\s]{3,255}$/i", $i["position"])) {
+		if (!preg_match("/^[\\a-z0-9\-\.\'\s\&]{3,255}$/i", $i["position"])) {
 			error_api("{$m} Field `position` must be a valid position", 400);
 			return;
 		}
 
 		if (!filter_var($i["email"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email"]}\" is not a valid email address", 400);
+			return;
+		}
+
+		if (!filter_var($i["photo"], FILTER_VALIDATE_URL)) {
+			error_api("{$m} `photo` must be a valid URL", 400);
+			return;
+		}
+
+		$c = strlen($i["last_education"]);
+
+		if ($c < 4) {
+			error_api("{$m} `last_education` is too short, please provide more details at least 4 bytes", 400);
+			return;
+		}
+
+		if ($c > 255) {
+			error_api("{$m} `last_education` is too long, please provide shorten details not more than 255 bytes", 400);
 			return;
 		}
 
@@ -188,9 +209,33 @@ class CoacherRegister implements APIContract
 			return;
 		}
 
-		if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
-			error_api("{$m} Invalid phone number", 400);	
+		$c = strlen($i["topic"]);
+
+		if ($c < 20) {
+			error_api("{$m} `topic` is too short. Please provide a description at least 20 bytes.", 400);
 			return;
+		}
+
+		if ($c >= 1024) {
+			error_api("{$m} `topic` is too long. Please provide a description with size less than 1024 bytes.", 400);
+			return;
+		}
+
+		if (preg_match("/^[0-9\-\+]*$/", $i["phone"])) {
+			if (!preg_match("/^[0\+]\d{4,13}$/", str_replace("-", "", $i["phone"]))) {
+				error_api("{$m} Invalid phone number.", 400);	
+				return;
+			}
+		} else {
+			if (!preg_match("/^\@/", $i["phone"])) {
+				error_api("{$m} Invalid telegram username: Telegram username must be started with '@' or enter your phone number instead", 400);
+				return;
+			}
+
+			if (!preg_match("/^\@[a-z0-9][a-z0-9\_]{3,25}[a-z0-9]$/i", $i["phone"])) {
+				error_api("{$m} Invalid telegram username", 400);
+				return;
+			}
 		}
 
 		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {

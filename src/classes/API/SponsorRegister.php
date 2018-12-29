@@ -82,12 +82,13 @@ class SponsorRegister implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :phone, :sponsor_type, :created_at);"
+				"INSERT INTO `sponsors` (`company_name`, `company_sector`, `email_pic`, `company_logo`, `phone`, `sponsor_type`, `created_at`) VALUES (:company_name, :company_sector, :email_pic, :company_logo, :phone, :sponsor_type, :created_at);"
 			);
 			$st->execute(
 				[
 					":company_name" => $i["company_name"],
 					":company_sector" => $i["company_sector"],
+					":company_logo" => $i["company_logo"],
 					":email_pic" => $i["email_pic"],
 					":phone" => $i["phone"],
 					":sponsor_type" => $i["sponsor_type"],
@@ -125,6 +126,7 @@ class SponsorRegister implements APIContract
 		$required = [
 			"company_name",
 			"company_sector",
+			"company_logo",
 			"email_pic",
 			"phone",
 			"sponsor_type",
@@ -161,6 +163,16 @@ class SponsorRegister implements APIContract
 			return;
 		}
 
+		if (!filter_var($i["company_logo"], FILTER_VALIDATE_URL)) {
+			error_api("{$m} `company_logo` must be a valid URL", 400);
+			return;
+		}
+
+		if (strlen($i["company_logo"]) > 255) {
+			error_api("{$m} `company_logo` is too long, please provide a company_logo URL less than 255 bytes.");	
+			return;
+		}
+
 		if (!filter_var($i["email_pic"], FILTER_VALIDATE_EMAIL)) {
 			error_api("{$m} \"{$i["email_pic"]}\" is not a valid email address", 400);
 			return;
@@ -183,7 +195,7 @@ class SponsorRegister implements APIContract
 			}
 		}		
 
-		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold"])) {
+		if (!in_array($i["sponsor_type"], ["platinum", "silver", "gold", "media_partner"])) {
 			error_api("{$m} \"{$i["sponsor_type"]}\" is not a valid sponsor type!", 400);
 			return;
 		}

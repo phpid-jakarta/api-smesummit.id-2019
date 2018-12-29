@@ -45,27 +45,24 @@ class SponsorRegisterTest extends TestCase
 	{
 		return [
 			[[
-				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Chemistry",
 				"email_pic" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
 				"sponsor_type" => "gold"
 			], true],
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "silver"
 			], true],
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -81,36 +78,32 @@ class SponsorRegisterTest extends TestCase
 	{
 		return [
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "~~PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "gold"
 			], false, "/Field `company_name` must be a valid company/"],
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianh@ari@gmail.com",
 				"phone" => "085123123123",
 				"sponsor_type" => "gold"
 			], false, "/is not a valid email address/"],
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "9999",
 				"sponsor_type" => "gold"
 			], false, "/Invalid phone number/"],
 			[[
-				"name" => "Septian Hari Nugroho",
 				"company_name" => "PHP LTM Group",
-				"position" => "Founder",
+				"company_logo" => "https://site.com/company_logo.jpg",
 				"company_sector" => "Food and Drink",
 				"email_pic" => "septianhari@gmail.com",
 				"phone" => "085123123123",
@@ -137,6 +130,8 @@ class SponsorRegisterTest extends TestCase
 	public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
 	{
 		$o = $this->submit($form);
+
+		var_dump($o["out"]);
 
 		$this->assertTrue(isset($o["info"]["http_code"]));
 		$this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));

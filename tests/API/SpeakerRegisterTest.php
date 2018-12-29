@@ -128,7 +128,7 @@ class SpeakerRegisterTest extends TestCase
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
-				"position" => "blablba",
+				"position" => str_repeat("qqq", 200),
 				"email" => "ammarfaizi2@gmail.com",
 				"photo" => "https://www.site.com/photo.jpg",
 				"last_education" => "Chemical engineering ITB",
@@ -136,7 +136,7 @@ class SpeakerRegisterTest extends TestCase
 				"phone" => "@ammarfaizi2",
 				"sector" => "Industry",
 				"topic" => "PHP Unit"
-			], false, "/Field \`position\` must be a valid position/"],
+			], false, "/\`position\` field is not a valid position/"],
 			[[
 				"name" => "Ammar Faizi",
 				"company_name" => "Tea Inside",
