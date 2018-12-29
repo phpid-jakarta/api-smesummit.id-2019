@@ -55,7 +55,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "gold"
 			], true],
 			[[
 				"name" => "Ammar Faizi",
@@ -68,7 +67,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "silver"
 			], true],
 			[[
 				"name" => "Ammar Faizi",
@@ -81,7 +79,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "media_partner"
 			], true],
 			[[
 				"name" => "Ammar Faizi",
@@ -94,7 +91,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "platinum"
 			], true],
 		];
 	}
@@ -116,7 +112,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "platinum"
 			], false, "/Field \`company_name\` must be a valid company/"],
 			[[
 				"name" => "~~Ammar Faizi",
@@ -129,7 +124,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "platinum"
 			], false, "/Field \`name\` must be a valid person/"],
 			[[
 				"name" => "Ammar Faizi",
@@ -142,7 +136,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "platinum"
 			], false, "/\`photo\` must be a valid URL/"],
 			[[
 				"name" => "Ammar Faizi",
@@ -155,7 +148,6 @@ class CoacherRegisterTest extends TestCase
 				"last_education" => "Chemical engineering ITB",
 				"email" => "ammarfaizi2@gmail.com",
 				"phone" => "085867152777",
-				"sponsor_type" => "platinum"
 			], false, "/Field \`company_name\` must be a valid company/"],
 		];
 	}
