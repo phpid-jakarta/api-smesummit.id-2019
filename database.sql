@@ -133,4 +133,8 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2018-12-29 09:26:44
+ALTER TABLE `volunteers`
+ADD `city` varchar(255) DEFAULT NULL;
+
+
+-- 2019-01-07 17:29:59
