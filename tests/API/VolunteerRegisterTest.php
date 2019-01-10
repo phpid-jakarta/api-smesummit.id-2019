@@ -49,6 +49,8 @@ class VolunteerRegisterTest extends TestCase
                 "email" => "ammarfaizi2@gmail.com",
                 "phone" => "085867152777",
                 "city" => "Solo",
+                "ig_link" => "https://www.instagram.com/ammarfaizi12",
+                "fb_link" => "https://www.facebook.com/ammarfaizi2",
                 "why_you_apply_desc" => "I want to blabla qqqq bbbb"
             ], true],
             [[
@@ -103,6 +105,24 @@ class VolunteerRegisterTest extends TestCase
                 "city" => "*** 111",
                 "why_you_apply_desc" => "I want to blabla qqqq bbbb"
             ], false, "/Field `city` must be a valid city name/"],
+            [[
+                "name" => "Ammar Faizi",
+                "email" => "ammarfaizi2@gmail.com",
+                "phone" => "085867152777",
+                "city" => "Solo",
+                "ig_link" => "~~~",
+                "fb_link" => "https://www.facebook.com/ammarfaizi2",
+                "why_you_apply_desc" => "I want to blabla qqqq bbbb"
+            ], false, "/`fb_link` must be a valid URL/"],
+            [[
+                "name" => "Ammar Faizi",
+                "email" => "ammarfaizi2@gmail.com",
+                "phone" => "085867152777",
+                "city" => "Solo",
+                "ig_link" => "https://www.instagram.com/ammarfaizi12",
+                "fb_link" => "~~~~~",
+                "why_you_apply_desc" => "I want to blabla qqqq bbbb"
+            ], false, "/`ig_link` must be a valid URL/"],
         ];
     }
 

@@ -136,5 +136,10 @@ CREATE TABLE `volunteers` (
 ALTER TABLE `volunteers`
 ADD `city` varchar(255) DEFAULT NULL;
 
+ALTER TABLE `volunteers`
+ADD `ig_link` varchar(255) DEFAULT NULL;
+
+ALTER TABLE `volunteers`
+ADD `fb_link` varchar(255) DEFAULT NULL;
 
 -- 2019-01-07 17:29:59

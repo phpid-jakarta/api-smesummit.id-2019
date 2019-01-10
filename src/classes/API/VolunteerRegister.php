@@ -82,7 +82,7 @@ class VolunteerRegister implements APIContract
         try {
             $pdo = DB::pdo();
             $st = $pdo->prepare(
-                "INSERT INTO `volunteers` (`name`, `email`, `phone`, `city`, `why_you_apply_desc`, `created_at`) VALUES (:name, :email, :phone, :city, :why_you_apply_desc, :created_at);"
+                "INSERT INTO `volunteers` (`name`, `email`, `phone`, `city`, `ig_link`, `fb_link`, `why_you_apply_desc`, `created_at`) VALUES (:name, :email, :phone, :city, :ig_link, :fb_link, :why_you_apply_desc, :created_at);"
             );
             $st->execute(
                 [
@@ -90,6 +90,8 @@ class VolunteerRegister implements APIContract
                     ":email" => $i["email"],
                     ":phone" => $i["phone"],
                     ":city" => $i["city"],
+                    ":ig_link" => $i["ig_link"],
+                    ":fb_link" => $i["fb_link"],
                     ":why_you_apply_desc" => $i["why_you_apply_desc"],
                     ":created_at" => date("Y-m-d H:i:s")
                 ]
@@ -164,6 +166,32 @@ class VolunteerRegister implements APIContract
         if (!preg_match("/^[0\+]\d{4,13}$/", $i["phone"])) {
             error_api("{$m} Invalid phone number", 400);
             return;
+        }
+
+        if (!isset($i["city"])) {
+            $i["city"] = "";
+        }
+
+        if (!isset($i["fb_link"])) {
+            $i["fb_link"] = "";
+        }
+
+        if (!isset($i["ig_link"])) {
+            $i["ig_link"] = "";
+        }
+
+        if ($i["fb_link"] !== "") {
+            if (!filter_var($i["fb_link"], FILTER_VALIDATE_URL)) {
+                error_api("{$m} `fb_link` must be a valid URL");
+                return;
+            }
+        }
+
+         if ($i["ig_link"] !== "") {
+            if (!filter_var($i["ig_link"], FILTER_VALIDATE_URL)) {
+                error_api("{$m} `ig_link` must be a valid URL");
+                return;
+            }
         }
 
         if (!preg_match("/^[a-z\.\'\-\s]{0,255}$/i", $i["city"])) {
