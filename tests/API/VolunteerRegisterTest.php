@@ -113,7 +113,7 @@ class VolunteerRegisterTest extends TestCase
                 "ig_link" => "~~~",
                 "fb_link" => "https://www.facebook.com/ammarfaizi2",
                 "why_you_apply_desc" => "I want to blabla qqqq bbbb"
-            ], false, "/`fb_link` must be a valid URL/"],
+            ], false, "/`ig_link` must be a valid URL/"],
             [[
                 "name" => "Ammar Faizi",
                 "email" => "ammarfaizi2@gmail.com",
@@ -122,7 +122,7 @@ class VolunteerRegisterTest extends TestCase
                 "ig_link" => "https://www.instagram.com/ammarfaizi12",
                 "fb_link" => "~~~~~",
                 "why_you_apply_desc" => "I want to blabla qqqq bbbb"
-            ], false, "/`ig_link` must be a valid URL/"],
+            ], false, "/`fb_link` must be a valid URL/"],
         ];
     }
 
@@ -144,7 +144,7 @@ class VolunteerRegisterTest extends TestCase
     public function testSubmit(array $form, bool $isValid, string $mustMatch = null): void
     {
         $o = $this->submit($form);
-
+        var_dump($o["out"]);
         $this->assertTrue(isset($o["info"]["http_code"]));
         $this->assertEquals($o["info"]["http_code"], ($isValid ? 200 : 400));
 

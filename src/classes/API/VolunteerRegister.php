@@ -182,14 +182,14 @@ class VolunteerRegister implements APIContract
 
         if ($i["fb_link"] !== "") {
             if (!filter_var($i["fb_link"], FILTER_VALIDATE_URL)) {
-                error_api("{$m} `fb_link` must be a valid URL");
+                error_api("{$m} `fb_link` must be a valid URL", 400);
                 return;
             }
         }
 
          if ($i["ig_link"] !== "") {
             if (!filter_var($i["ig_link"], FILTER_VALIDATE_URL)) {
-                error_api("{$m} `ig_link` must be a valid URL");
+                error_api("{$m} `ig_link` must be a valid URL", 400);
                 return;
             }
         }
