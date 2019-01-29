@@ -3,6 +3,7 @@
 namespace API;
 
 use DB;
+use PDO;
 use API;
 use PDOException;
 use Contracts\APIContract;
