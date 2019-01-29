@@ -100,8 +100,8 @@ class PaymentConfirmation implements APIContract
 					":no_ref" => $i["no_ref"],
 					":bank_name" => $i["bank_name"],
 					":bank_username" => $i["bank_username"],
-					":screenshot" => $i["screenshot"],
-					":status" => $i["status"],
+					":screenshot" => $i["screenshoot"],
+					":status" => "pending",
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -178,7 +178,7 @@ class PaymentConfirmation implements APIContract
 
 		$this->userId = (int) $st[0];
 
-		
+
 
 		unset($c, $i, $st);
 		return;
