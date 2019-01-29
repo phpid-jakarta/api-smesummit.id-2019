@@ -14,7 +14,7 @@ static $testToken = NULL;
  * @license MIT
  * @package \test\API
  */
-class CoacherRegisterTest extends TestCase
+class PaymentConfirmationTest extends TestCase
 {	
 	use Curl;
 
