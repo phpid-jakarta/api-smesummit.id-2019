@@ -178,7 +178,51 @@ class PaymentConfirmation implements APIContract
 
 		$this->userId = (int) $st[0];
 
+		if (preg_match("/^[0-9\-\+]*$/", $i["phone"])) {
+			if (!preg_match("/^[0\+]\d{4,13}$/", str_replace("-", "", $i["phone"]))) {
+				error_api("{$m} Invalid phone number.", 400);	
+				return;
+			}
+		} else {
+			if (!preg_match("/^\@/", $i["phone"])) {
+				error_api("{$m} Invalid telegram username: Telegram username must be started with '@' or enter your phone number instead", 400);
+				return;
+			}
 
+			if (!preg_match("/^\@[a-z0-9][a-z0-9\_]{3,25}[a-z0-9]$/i", $i["phone"])) {
+				error_api("{$m} Invalid telegram username", 400);
+				return;
+			}
+		}
+
+		if (!in_array($i["payment_type"], ["participant", "sponsor", "coacher"])) {
+			error_api("{$m} Invalid payment_type", 400);
+			return;
+		}
+
+		$c = strlen($i["date_transfer"]);
+		if (($c < 6) || ($c > 15)) {
+			error_api("{$m} Invalid date_transfer", 400);
+			return;
+		}
+
+		$c = strlen($i["no_ref"]);
+		if (($c < 3) || ($c > 255)) {
+			error_api("{$m} Invalid no_ref", 400);
+			return;
+		}
+
+		$c = strlen($i["bank_name"]);
+		if (($c < 3) || ($c > 64)) {
+			error_api("{$m} Invalid bank_name", 400);
+			return;
+		}
+
+		$c = strlen($i["bank_username"]);
+		if (($c < 4) || ($c > 24)) {
+			error_api("{$m} Invalid bank_username", 400);
+			return;
+		}
 
 		unset($c, $i, $st);
 		return;
