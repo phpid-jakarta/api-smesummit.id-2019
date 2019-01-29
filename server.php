@@ -4,7 +4,7 @@ declare(ticks=1);
 
 $port = "8080";
 $docRoot = __DIR__."/public";
-// $extArgv = "";
+$extArgv = "";
 // $extArgv = "-d extension=".__DIR__."/shared_objects/apismesummit_ext1.so";
 
 function deletePidFile()
