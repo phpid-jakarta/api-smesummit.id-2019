@@ -127,16 +127,15 @@ class PaymentConfirmation implements APIContract
 	{
 		$m = "Bad Request:";
 		$required = [
-			"name",
-			"company_name",
-			"position",
 			"email",
-			"photo",
-			"last_education",
-			"experience",
 			"phone",
-			"sector",
-			"topic",
+			"total_payment",
+			"payment_type",
+			"date_transfer",
+			"no_ref",
+			"bank_name",
+			"bank_username",
+			"screenshoot",
 			"captcha"
 		];
 
@@ -160,6 +159,18 @@ class PaymentConfirmation implements APIContract
 
 		unset($required, $v);
 
+		$pdo = DB::pdo();
+		$st = $pdo->prepare("SELECT `id` FROM `participants` WHERE `email` LIKE :email LIMIT 1;");
+		$st->execute([":email" => $i["email"]]);
+		if (!($st = $st->fetch(PDO::FETCH_NUM))) {
+			error_api(
+				"{$m} Email \"{$i["email"]}\" is not registered in our database. Please register as participants before confirm the payment.",
+				400
+			);
+			return;
+		}
+		$pdo = null;
+		unset($c, $i, $pdo);
 		return;
 	}
 
