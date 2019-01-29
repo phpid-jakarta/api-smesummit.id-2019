@@ -26,9 +26,9 @@ class PaymentConfirmation implements APIContract
 	private $captcha;
 
 	/**
-	 * @var int
+	 * @var array
 	 */
-	private $userId;
+	private $userInfo = [];
 
 	/**
 	 * Constructor.
@@ -92,7 +92,7 @@ class PaymentConfirmation implements APIContract
 			);
 			$st->execute(
 				[
-					":email_user_id" => $this->userId,
+					":email_user_id" => $this->userInfo["id"],
 					":phone" => $i["phone"],
 					":total_payment" => $i["total_payment"],
 					":payment_type" => $i["payment_type"],
@@ -105,6 +105,11 @@ class PaymentConfirmation implements APIContract
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
+
+			if (file_exists("/usr/sbin/sendmail")) {
+				$this->sendMail($this->userInfo);
+			}
+
 			print API::json001("success",
 				[
 					"message" => "register_success"
@@ -166,9 +171,9 @@ class PaymentConfirmation implements APIContract
 		unset($required, $v);
 
 		$pdo = DB::pdo();
-		$st = $pdo->prepare("SELECT `id` FROM `participants` WHERE `email` LIKE :email LIMIT 1;");
+		$st = $pdo->prepare("SELECT `id`,`name`,`company_name`,`position`,`phone`,`email` FROM `participants` WHERE `email` LIKE :email LIMIT 1;");
 		$st->execute([":email" => $i["email"]]);
-		if (!($st = $st->fetch(PDO::FETCH_NUM))) {
+		if (!($st = $st->fetch(PDO::FETCH_ASSOC))) {
 			error_api(
 				"{$m} Email \"{$i["email"]}\" is not registered in our database. Please register as participants before confirm the payment.",
 				400
@@ -176,7 +181,7 @@ class PaymentConfirmation implements APIContract
 			return;
 		}
 
-		$this->userId = (int) $st[0];
+		$this->userInfo = $st;
 
 		if (preg_match("/^[0-9\-\+]*$/", $i["phone"])) {
 			if (!preg_match("/^[0\+]\d{4,13}$/", str_replace("-", "", $i["phone"]))) {
@@ -251,5 +256,29 @@ class PaymentConfirmation implements APIContract
 				"expired" => $expired
 			]
 		);
+	}
+
+	/**
+	 * @param array &$u
+	 * @return void
+	 */
+	private function sendMail(array &$u): void
+	{
+		$to = $u["email"];
+		$subject = "SME Summit 2019 - Payment Instructions Email";
+		ob_start();
+		require BASEPATH."/mail_templates/payment_instruction.php";
+		$message = ob_get_clean();
+
+		// To send HTML mail, the Content-type header must be set
+		$headers[] = 'MIME-Version: 1.0';
+		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+		// Additional headers
+		$headers[] = 'To: {$u["name"]} <{$u["email"]}>';
+		$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";		
+
+		// Mail it
+		mail($to, $subject, $message, implode("\r\n", $headers));
 	}
 }
