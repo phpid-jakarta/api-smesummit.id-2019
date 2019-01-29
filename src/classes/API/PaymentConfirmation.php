@@ -107,6 +107,7 @@ class PaymentConfirmation implements APIContract
 			);
 
 			if (file_exists("/usr/sbin/sendmail")) {
+				$this->userInfo["ticket_price"] = $i["total_payment"];
 				$this->sendMail($this->userInfo);
 			}
 
@@ -271,12 +272,12 @@ class PaymentConfirmation implements APIContract
 		$message = ob_get_clean();
 
 		// To send HTML mail, the Content-type header must be set
-		$headers[] = 'MIME-Version: 1.0';
-		$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+		$headers[] = "MIME-Version: 1.0";
+		$headers[] = "Content-type: text/html; charset=iso-8859-1";
 
 		// Additional headers
-		$headers[] = 'To: {$u["name"]} <{$u["email"]}>';
-		$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";		
+		$headers[] = "To: {$u["name"]} <{$u["email"]}>";
+		$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";
 
 		// Mail it
 		mail($to, $subject, $message, implode("\r\n", $headers));
