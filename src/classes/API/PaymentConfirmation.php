@@ -26,6 +26,11 @@ class PaymentConfirmation implements APIContract
 	private $captcha;
 
 	/**
+	 * @var int
+	 */
+	private $userId;
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct()
@@ -83,20 +88,20 @@ class PaymentConfirmation implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `speakers` (`name`, `company_name`, `position`, `email`, `photo`, `last_education`, `experience`, `phone`, `sector`, `topic`, `created_at`) VALUES (:name,:company_name,:position,:email,:photo,:last_education,:experience,:phone,:sector,:topic,:created_at);"
+				"INSERT INTO `payment_confirmation` (`email_user_id`, `phone`, `total_payment`, `payment_type`, `date_transfer`, `no_ref`, `bank_name`, `bank_username`, `screenshot`, `status`, `created_at`) VALUES (:email_user_id, :phone, :total_payment, :payment_type, :date_transfer, :no_ref, :bank_name, :bank_username, :screenshot, :status, :created_at);"
 			);
 			$st->execute(
 				[
-					":name" => $i["name"],
-					":company_name" => $i["company_name"],
-					":position" => $i["position"],
-					":email" => $i["email"],
-					":photo" => $i["photo"],
-					":last_education" => $i["last_education"],
-					":experience" => $i["experience"],
+					":email_user_id" => $this->userId,
 					":phone" => $i["phone"],
-					":sector" => $i["sector"],
-					":topic" => $i["topic"],
+					":total_payment" => $i["total_payment"],
+					":payment_type" => $i["payment_type"],
+					":date_transfer" => $i["date_transfer"],
+					":no_ref" => $i["no_ref"],
+					":bank_name" => $i["bank_name"],
+					":bank_username" => $i["bank_username"],
+					":screenshot" => $i["screenshot"],
+					":status" => $i["status"],
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -170,8 +175,12 @@ class PaymentConfirmation implements APIContract
 			);
 			return;
 		}
-		$pdo = null;
-		unset($c, $i, $pdo);
+
+		$this->userId = (int) $st[0];
+
+		
+
+		unset($c, $i, $st);
 		return;
 	}
 
