@@ -54,6 +54,28 @@ class PaymentConfirmationTest extends TestCase
 				"bank_name" => "BCA",
 				"bank_username" => "0770711177",
 				"screenshoot" => self::PHOTO
+			], true],
+			[[
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "085867152777",
+				"total_payment" => "3000000",
+				"payment_type" => "sponsor",
+				"date_transfer" => date("d-m-Y"),
+				"no_ref" => "1234567890",
+				"bank_name" => "BCA",
+				"bank_username" => "0770711177",
+				"screenshoot" => self::PHOTO
+			], true],
+			[[
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "085867152777",
+				"total_payment" => "3000000",
+				"payment_type" => "coacher",
+				"date_transfer" => date("d-m-Y"),
+				"no_ref" => "1234567890",
+				"bank_name" => "BCA",
+				"bank_username" => "0770711177",
+				"screenshoot" => self::PHOTO
 			], true]
 		];
 	}
@@ -64,7 +86,28 @@ class PaymentConfirmationTest extends TestCase
 	private function invalidInput(): array
 	{
 		return [
-		
+			[[
+				"email" => "ammarfaizi2@gmail.comq",
+				"phone" => "085867152777",
+				"total_payment" => "3000000",
+				"payment_type" => "participant",
+				"date_transfer" => date("d-m-Y"),
+				"no_ref" => "1234567890",
+				"bank_name" => "BCA",
+				"bank_username" => "0770711177",
+				"screenshoot" => ""
+			], false, "/is not registered in our database. Please register as participants before confirm the payment/"],
+			[[
+				"email" => "ammarfaizi2@gmail.com",
+				"phone" => "085867152777",
+				"total_payment" => "3000000",
+				"payment_type" => "sponsord",
+				"date_transfer" => date("d-m-Y"),
+				"no_ref" => "1234567890",
+				"bank_name" => "BCA",
+				"bank_username" => "0770711177",
+				"screenshoot" => ""
+			], false, "/Invalid payment_type/"],
 		];
 	}
 
