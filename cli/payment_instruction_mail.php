@@ -32,7 +32,7 @@ $u = [
 	"name" => "Ammar Faizi",
 	"position" => "Owner",
 	"company_name" => "Tea Inside",
-	"ticketPrice" => $ticketPrice
+	"ticket_price" => $ticketPrice
 ];
 
 sendMail($u);

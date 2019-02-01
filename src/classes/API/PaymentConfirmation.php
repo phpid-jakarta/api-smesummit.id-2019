@@ -274,21 +274,6 @@ class PaymentConfirmation implements APIContract
 	 */
 	private function sendMail(array &$u): void
 	{
-		$to = $u["email"];
-		$subject = "SME Summit 2019 - Payment Instructions Email";
-		ob_start();
-		require BASEPATH."/mail_templates/payment_instruction.php";
-		$message = ob_get_clean();
-
-		// To send HTML mail, the Content-type header must be set
-		$headers[] = "MIME-Version: 1.0";
-		$headers[] = "Content-type: text/html; charset=iso-8859-1";
-
-		// Additional headers
-		$headers[] = "To: {$u["name"]} <{$u["email"]}>";
-		$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";
-
-		// Mail it
-		mail($to, $subject, $message, implode("\r\n", $headers));
+		// The payment confirmation should be put in this method.
 	}
 }

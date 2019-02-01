@@ -14,6 +14,8 @@ use Contracts\APIContract;
  */
 class ParticipantRegister implements APIContract
 {
+	const TIKET_PRICE = "Rp.500.000";
+
 	/**
 	 * @var string
 	 */
@@ -97,6 +99,18 @@ class ParticipantRegister implements APIContract
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
+
+			if (file_exists("/usr/sbin/sendmail")) {
+				$u = [
+					"email" => "ammarfaizi2@gmail.com",
+					"phone" => "085867152777",
+					"name" => "Ammar Faizi",
+					"position" => "Owner",
+					"company_name" => "Tea Inside",
+					"ticket_price" => self::TICKET_PRICE
+				];
+				$this->sendMail($u);
+			}
 
 			print API::json001("success",
 				[
@@ -248,5 +262,27 @@ class ParticipantRegister implements APIContract
 				"expired" => $expired
 			]
 		);
+	}
+
+	/**
+	 * @param $u array
+	 * @return bool
+	 */
+	private function sendMail(array &$u): bool
+	{
+		$to = $u["email"];
+		$subject = "SME Summit 2019 - Payment Instructions Email";
+		ob_start();
+		require BASEPATH."/mail_templates/payment_instruction.php";
+		$message = ob_get_clean();
+
+		$headers = [
+			"MIME-Version: 1.0",
+			"Content-type: text/html; charset=iso-8859-1",
+			"To: {$u["name"]} <{$u["email"]}>",
+			"From: Payment SME SUMMIT <payment@smesummit.id>"
+		];
+
+		return (bool)mail($to, $subject, $message, implode("\r\n", $headers));
 	}
 }
