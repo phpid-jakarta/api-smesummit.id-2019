@@ -20,30 +20,33 @@ while ($u = $st->fetch(PDO::FETCH_ASSOC)):
 	// 	"ticket_price" => "Rp.500.000"
 	// ];
 
-	$to = $u["email"];
-	$subject = "SME Summit 2019 - Payment Instructions Email";
+	print_r($u);
+	usleep(500000);
 
-	ob_start();
-	require BASEPATH."/mail_templates/payment_instruction.php";
-	$message = ob_get_clean();
+	// $to = $u["email"];
+	// $subject = "SME Summit 2019 - Payment Instructions Email";
 
-	// To send HTML mail, the Content-type header must be set
-	$headers[] = "MIME-Version: 1.0";
-	$headers[] = "Content-type: text/html; charset=iso-8859-1";
+	// ob_start();
+	// require BASEPATH."/mail_templates/payment_instruction.php";
+	// $message = ob_get_clean();
 
-	// Additional headers
-	$headers[] = "To: {$u["name"]} <{$u["email"]}>";
-	$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";
+	// // To send HTML mail, the Content-type header must be set
+	// $headers[] = "MIME-Version: 1.0";
+	// $headers[] = "Content-type: text/html; charset=iso-8859-1";
 
-	// Mail it
-	$q = mail($to, $subject, $message, implode("\r\n", $headers));
+	// // Additional headers
+	// $headers[] = "To: {$u["name"]} <{$u["email"]}>";
+	// $headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";
+
+	// // Mail it
+	// $q = mail($to, $subject, $message, implode("\r\n", $headers));
 	
-	if ($q) {
-		$pdo->prepare("UPDATE `email_verif_sent` WHERE `id` = :participant_id LIMIT 1;")
-			->execute([":participant_id" => $u["id"]]);
-		printf("[Success] %s\n", $to);
-	} else {
-		printf("[Failed] %s\n", $to);
-	}
+	// if ($q) {
+	// 	$pdo->prepare("UPDATE `email_verif_sent` WHERE `id` = :participant_id LIMIT 1;")
+	// 		->execute([":participant_id" => $u["id"]]);
+	// 	printf("[Success] %s\n", $to);
+	// } else {
+	// 	printf("[Failed] %s\n", $to);
+	// }
 
 endwhile;
