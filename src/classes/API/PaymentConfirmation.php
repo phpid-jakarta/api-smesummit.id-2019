@@ -88,7 +88,7 @@ class PaymentConfirmation implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `payment_confirmation` (`email_user_id`, `phone`, `total_payment`, `payment_type`, `date_transfer`, `no_ref`, `bank_name`, `bank_username`, `screenshot`, `status`, `created_at`) VALUES (:email_user_id, :phone, :total_payment, :payment_type, :date_transfer, :no_ref, :bank_name, :bank_username, :screenshot, :status, :created_at);"
+				"INSERT INTO `payment_confirmation` (`email_user_id`, `phone`, `total_payment`, `payment_type`, `date_transfer`, `no_ref`, `bank_name`, `bank_username`, `screenshot`, `status`, `notes`, `created_at`) VALUES (:email_user_id, :phone, :total_payment, :payment_type, :date_transfer, :no_ref, :bank_name, :bank_username, :screenshot, :status, :notes, :created_at);"
 			);
 			$st->execute(
 				[
@@ -102,6 +102,7 @@ class PaymentConfirmation implements APIContract
 					":bank_username" => $i["bank_username"],
 					":screenshot" => $i["screenshoot"],
 					":status" => "pending",
+					":notes" => (isset($i["notes"]) ? $i["notes"] : null),
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -150,6 +151,14 @@ class PaymentConfirmation implements APIContract
 			"screenshoot",
 			"captcha"
 		];
+
+		// notes is just an optional field.
+		// but, if it is provided, it must be a string.
+		//
+		if (isset($i["notes"])) {
+			error_api("{$m} Field `notes` must be a string", 400);
+			return;
+		}
 
 		foreach ($required as $v) {
 			if (!isset($i[$v])) {
