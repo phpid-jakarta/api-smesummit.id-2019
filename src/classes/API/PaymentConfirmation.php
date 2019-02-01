@@ -88,7 +88,7 @@ class PaymentConfirmation implements APIContract
 		try {
 			$pdo = DB::pdo();
 			$st = $pdo->prepare(
-				"INSERT INTO `payment_confirmation` (`email_user_id`, `phone`, `total_payment`, `payment_type`, `date_transfer`, `no_ref`, `bank_name`, `bank_username`, `screenshot`, `status`, `created_at`) VALUES (:email_user_id, :phone, :total_payment, :payment_type, :date_transfer, :no_ref, :bank_name, :bank_username, :screenshot, :status, :created_at);"
+				"INSERT INTO `payment_confirmation` (`email_user_id`, `phone`, `total_payment`, `payment_type`, `date_transfer`, `no_ref`, `bank_name`, `bank_username`, `screenshot`, `status`, `notes`, `created_at`) VALUES (:email_user_id, :phone, :total_payment, :payment_type, :date_transfer, :no_ref, :bank_name, :bank_username, :screenshot, :status, :notes, :created_at);"
 			);
 			$st->execute(
 				[
@@ -102,6 +102,7 @@ class PaymentConfirmation implements APIContract
 					":bank_username" => $i["bank_username"],
 					":screenshot" => $i["screenshoot"],
 					":status" => "pending",
+					":notes" => (isset($i["notes"]) ? $i["notes"] : null),
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -150,6 +151,14 @@ class PaymentConfirmation implements APIContract
 			"screenshoot",
 			"captcha"
 		];
+
+		// notes is just an optional field.
+		// but, if it is provided, it must be a string.
+		//
+		if (isset($i["notes"])) {
+			error_api("{$m} Field `notes` must be a string", 400);
+			return;
+		}
 
 		foreach ($required as $v) {
 			if (!isset($i[$v])) {
@@ -265,21 +274,6 @@ class PaymentConfirmation implements APIContract
 	 */
 	private function sendMail(array &$u): void
 	{
-		$to = $u["email"];
-		$subject = "SME Summit 2019 - Payment Instructions Email";
-		ob_start();
-		require BASEPATH."/mail_templates/payment_instruction.php";
-		$message = ob_get_clean();
-
-		// To send HTML mail, the Content-type header must be set
-		$headers[] = "MIME-Version: 1.0";
-		$headers[] = "Content-type: text/html; charset=iso-8859-1";
-
-		// Additional headers
-		$headers[] = "To: {$u["name"]} <{$u["email"]}>";
-		$headers[] = "From: Payment SME SUMMIT <payment@smesummit.id>";
-
-		// Mail it
-		mail($to, $subject, $message, implode("\r\n", $headers));
+		// The payment confirmation should be put in this method.
 	}
 }
