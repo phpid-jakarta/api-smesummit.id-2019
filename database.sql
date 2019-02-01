@@ -57,7 +57,7 @@ CREATE TABLE `participants` (
   `phone` varchar(255) NOT NULL,
   `problem_desc` text NOT NULL,
   `status` enum('New Request','Invoice Sent','Confirmed','Canceled','Rejected') DEFAULT NULL,
-  `email_verif_sent` enum('0','1') NOT NULL DEFAULT '0',
+  `payment_instruction_email_sent` enum('0','1') NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
@@ -167,4 +167,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2019-02-01 04:43:23
+-- 2019-02-01 06:15:45
