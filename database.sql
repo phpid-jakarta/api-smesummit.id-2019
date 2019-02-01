@@ -80,6 +80,8 @@ CREATE TABLE `payment_confirmation` (
   `bank_name` varchar(64) NOT NULL,
   `bank_username` varchar(64) NOT NULL,
   `screenshot` text NOT NULL,
+  `notes` text,
+  `email_verif_sent` enum('0','1') DEFAULT '0',
   `status` enum('pending','approved','rejected') NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -165,4 +167,4 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2019-01-29 10:07:23
+-- 2019-02-01 04:28:15
