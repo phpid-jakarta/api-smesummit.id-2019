@@ -52,10 +52,6 @@
 			.imageContentText {margin-top: 10px;line-height:0;}
 			.imageContentText a {line-height:0;}
 			#invisibleIntroduction {display:none !important;} /* Removing the introduction text from the view */
-      .gradient{
-        background: #36D1DC;
-        background: linear-gradient(to right, #5B86E5, #36D1DC);
-      }
 
 			/*FRAMEWORK HACKS & OVERRIDES */
 			span[class=ios-color-hack] a {color:#275100!important;text-decoration:none!important;} /* Remove all link colors in IOS (below are duplicates based on the color preference) */
@@ -219,7 +215,7 @@
 							<tr>
 								<td align="center" valign="top">
 									<!-- CENTERING TABLE // -->
-                  <table border="0" class="gradient" cellpadding="0" cellspacing="0" width="100%"
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%"
                     style="color:#FFFFFF;border-top-left-radius: 0.5em;border-top-right-radius: 0.5em;">
 										<tr>
 											<td align="center" valign="top">
@@ -231,7 +227,7 @@
 															<!-- CONTENT TABLE // -->
 															<table border="0" cellpadding="30" cellspacing="0" width="100%">
 																<tr>
-																	<td align="center" valign="top" class="textContent">
+																	<td align="center" valign="top" class="textContent" style="background-color: #5185eb;">
                                     <h1 style="color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;">
                                      SME SUMMIT 2019
                                     </h1>
@@ -254,15 +250,6 @@
                     </tr>
                   </table>
 
-                  <table border="0" class="gradient" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td valign="top" class="textContent">
-                          <div style="width: 500px;">
-                            <img src="https://www.smesummit.id/images/banner/bg-bottom.png" style="width: 500px;"/>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
 									<!-- // CENTERING TABLE -->
 								</td>
 							</tr>
