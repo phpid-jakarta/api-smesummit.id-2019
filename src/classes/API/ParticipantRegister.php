@@ -99,17 +99,27 @@ class ParticipantRegister implements APIContract
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
-
-			if (file_exists("/usr/sbin/sendmail")) {
-				$u = [
-					"email" => "ammarfaizi2@gmail.com",
-					"phone" => "085867152777",
-					"name" => "Ammar Faizi",
-					"position" => "Owner",
-					"company_name" => "Tea Inside",
-					"ticket_price" => self::TICKET_PRICE
-				];
-				$this->sendMail($u);
+			try {
+				if (file_exists("/usr/sbin/sendmail")) {
+					$u = [
+						"email" => "ammarfaizi2@gmail.com",
+						"phone" => "085867152777",
+						"name" => "Ammar Faizi",
+						"position" => "Owner",
+						"company_name" => "Tea Inside",
+						"ticket_price" => self::TICKET_PRICE
+					];
+					if ($this->sendMail($u)) {
+						$pdo->prepare("UPDATE `payment_instruction_email_sent` = '1' WHERE `id` = :id LIMIT 1;")
+						->execute(
+							[
+								":id" => $pdo->lastInsertId()
+							]
+						);
+					}
+				}	
+			} catch (\Error $e) {
+				error_api("Internal Server Error: {$e->getMessage()}", 500);
 			}
 
 			print API::json001("success",
