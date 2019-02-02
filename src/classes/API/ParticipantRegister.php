@@ -110,7 +110,7 @@ class ParticipantRegister implements APIContract
 						"ticket_price" => self::TICKET_PRICE
 					];
 					if ($this->sendMail($u)) {
-						$pdo->prepare("UPDATE `payment_instruction_email_sent` = '1' WHERE `id` = :id LIMIT 1;")
+						$pdo->prepare("UPDATE `participants` SET `payment_instruction_email_sent` = '1' WHERE `id` = :id LIMIT 1;")
 						->execute(
 							[
 								":id" => $pdo->lastInsertId()
