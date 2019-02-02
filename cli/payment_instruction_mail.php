@@ -39,6 +39,8 @@ sendMail($u);
 exit(0);
 
 
+$u = null;
+
 /**
  * Kirim email ke semua participant yang belum mendapatkan instruksi pembayaran.
  */
@@ -48,14 +50,16 @@ $st = $pdo->prepare(
 );
 $st->execute();
 while ($u = $st->fetch(PDO::FETCH_ASSOC)):
+
 	$u["ticket_price"] = $ticketPrice;
 	if (sendMail($u)) {
-		$pdo->prepare("UPDATE `participants` SET `email_verif_sent` = '1' WHERE `id` = :participant_id LIMIT 1;")
+		$pdo->prepare("UPDATE `participants` SET `payment_instruction_email_sent` = '1' WHERE `id` = :participant_id LIMIT 1;")
 			->execute([":participant_id" => $u["id"]]);
 		printf("[Success] %s\n", $to);
 	} else {
 		printf("[Failed] %s\n", $to);
 	}
+
 endwhile;
 
 $st = $pdo = null;
