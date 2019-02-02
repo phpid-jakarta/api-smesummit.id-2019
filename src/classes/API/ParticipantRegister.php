@@ -14,7 +14,7 @@ use Contracts\APIContract;
  */
 class ParticipantRegister implements APIContract
 {
-	const TIKET_PRICE = "Rp.500.000";
+	const TICKET_PRICE = "Rp.500.000";
 
 	/**
 	 * @var string
