@@ -155,7 +155,7 @@ class PaymentConfirmation implements APIContract
 		// notes is just an optional field.
 		// but, if it is provided, it must be a string.
 		//
-		if (isset($i["notes"])) {
+		if (isset($i["notes"]) && (!is_string($i`["notes"]))) {
 			error_api("{$m} Field `notes` must be a string", 400);
 			return;
 		}
