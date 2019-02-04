@@ -308,7 +308,7 @@
                                               </tr>
                                             </table>
                                             <br><br>
-                                            Guna menindaklanjuti pendaftaran tersebut, Anda diharuskan membayar tiket dengan cara melakukan <b>TRANSFER</b> kepada No Rekening berikut:
+                                            Sebagai tindak lanjut dari pendaftaran tersebut, maka selanjutnya anda dapat melakukan pembayaran tiket dengan cara transfer ke No Rekening Berikut:
 
                                             <br><br>
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -334,7 +334,7 @@
                                               </tr>
                                             </table>
                                             <br><br>
-                                            Setelah melakukan pembayaran, Anda diharuskan melakukan konfirmasi pembayaran di halaman <a href="https://www.smesummit.id/payment-confirmation/">https://www.smesummit.id/payment-confirmation/</a>.
+                                            Setelah melakukan pembayaran, segera lakukan konfirmasi pembayaran di halaman <a href="https://www.smesummit.id/payment-confirmation/">https://www.smesummit.id/payment-confirmation/</a>.
                                           </div>
 																				</td>
 																			</tr>
