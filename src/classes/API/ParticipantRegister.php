@@ -102,11 +102,11 @@ class ParticipantRegister implements APIContract
 			try {
 				if (file_exists("/usr/sbin/sendmail")) {
 					$u = [
-						"email" => "ammarfaizi2@gmail.com",
-						"phone" => "085867152777",
-						"name" => "Ammar Faizi",
-						"position" => "Owner",
-						"company_name" => "Tea Inside",
+						"email" => $i["email"],
+						"phone" => $i["phone"],
+						"name" => $i["name"],
+						"position" => $i["owner"],
+						"company_name" => $i["company_name"],
 						"ticket_price" => self::TICKET_PRICE
 					];
 					if ($this->sendMail($u)) {
