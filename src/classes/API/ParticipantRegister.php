@@ -105,7 +105,7 @@ class ParticipantRegister implements APIContract
 						"email" => $i["email"],
 						"phone" => $i["phone"],
 						"name" => $i["name"],
-						"position" => $i["owner"],
+						"position" => $i["position"],
 						"company_name" => $i["company_name"],
 						"ticket_price" => self::TICKET_PRICE
 					];
