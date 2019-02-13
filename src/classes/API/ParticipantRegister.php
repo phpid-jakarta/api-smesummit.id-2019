@@ -3,6 +3,7 @@
 namespace API;
 
 use DB;
+use PDO;
 use API;
 use PDOException;
 use Contracts\APIContract;
@@ -14,7 +15,7 @@ use Contracts\APIContract;
  */
 class ParticipantRegister implements APIContract
 {
-	const TICKET_PRICE = "Rp.500.000";
+	const DEFAULT_TICKET_PRICE = 500000;
 
 	/**
 	 * @var string
@@ -50,9 +51,34 @@ class ParticipantRegister implements APIContract
 			case "submit":
 				$this->submit();
 				break;
+			case "voucher":
+				$this->voucher();
+				break;
 			default:
 				break;
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	private function voucher(): void
+	{
+		if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+			error_api("Method not allowed", 405);
+		}
+
+		$i = json_decode(file_get_contents("php://input"), true);
+		if (!is_array($i)) {
+			error_api("Invalid request body");
+			return;
+		}
+
+
+		if (isset($i["voucher"])) {
+			
+		}
+		exit(0);
 	}
 
 	/**
@@ -83,8 +109,17 @@ class ParticipantRegister implements APIContract
 	{
 		try {
 			$pdo = DB::pdo();
+
+			$st = $pdo->prepare("SELECT `amount` FROM `price` WHERE `description` = 'early_bird' LIMIT 1;");
+			$st->execute();
+			if ($st = $st->fetch(PDO::FETCH_NUM)) {
+				$ticketPrice = (double)$st[0];
+			} else {
+				$ticketPrice = self::DEFAULT_TICKET_PRICE;
+			}
+
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :created_at);"
+				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `ticket_price`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :ticket_price, :created_at);"
 			);
 			$st->execute(
 				[
@@ -96,6 +131,7 @@ class ParticipantRegister implements APIContract
 					":email" => $i["email"],
 					":phone" => $i["phone"],
 					":problem_desc" => $i["problem_desc"],
+					":payment_amount" => $ticketPrice,
 					":created_at" => date("Y-m-d H:i:s")
 				]
 			);
@@ -107,7 +143,7 @@ class ParticipantRegister implements APIContract
 						"name" => $i["name"],
 						"position" => $i["position"],
 						"company_name" => $i["company_name"],
-						"ticket_price" => self::TICKET_PRICE
+						"ticket_price" => $ticketPrice
 					];
 					if ($this->sendMail($u)) {
 						$pdo->prepare("UPDATE `participants` SET `payment_instruction_email_sent` = '1' WHERE `id` = :id LIMIT 1;")
@@ -117,14 +153,15 @@ class ParticipantRegister implements APIContract
 							]
 						);
 					}
-				}	
+				}
 			} catch (\Error $e) {
 				error_api("Internal Server Error: {$e->getMessage()}", 500);
 			}
 
 			print API::json001("success",
 				[
-					"message" => "register_success"
+					"message" => "register_success",
+					// "payment_amount" => self::TICKET_PRICE
 				]
 			);
 		} catch (PDOException $e) {
