@@ -88,7 +88,24 @@ class ParticipantRegister implements APIContract
 		}
 
 		$pdo = DB::pdo();
-		$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE ");
+		$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE `code` = :code LIMIT 1;");
+		$st->execute([":code" => $i["voucher"]]);
+		if ($st = $st->fetch(PDO::FETCH_NUM)) {
+
+			$ticketPrice = self::generatePrice();
+			$st[0] = (double)$st[0];
+
+			print API::json001("success",
+				[
+					"before_discount" => $ticketPrice,
+					"after_discount" => ($ticketPrice - ($ticketPrice * $st[0] / 100)),
+					"description" => "got discount {$st[0]}%"
+				]
+			);
+
+		} else {
+			error_api("Invalid voucher", 400);
+		}
 
 		exit(0);
 	}
@@ -118,7 +135,7 @@ class ParticipantRegister implements APIContract
 	 * @param float $percent_discount
 	 * @return double
 	 */
-	private static function generatePrice(float $percent_discount = 0): double
+	private static function generatePrice(float $percent_discount = 0): float
 	{
 		$pdo = DB::pdo();
 
@@ -131,7 +148,7 @@ class ParticipantRegister implements APIContract
 		}
 
 
-		return $p - ($p * $percent_discount / 100);
+		return (double)($p - ($p * $percent_discount / 100));
 	}
 
 	/**
