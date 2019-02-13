@@ -238,8 +238,8 @@ class CoacherRegister implements APIContract
 			}
 		}
 
-		if (!preg_match("/^[a-z0-9\-\.\'\s]{3,255}$/i", $i["company_sector"])) {
-			error_api("{$m} Field `company_sector` must be a valid company sector", 400);
+		if (!preg_match("/^.{3,255}$/i", $i["company_sector"])) {
+			error_api("{$m} Field `company_sector` must be a valid sector", 400);
 			return;
 		}
 
