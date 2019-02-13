@@ -44,6 +44,9 @@ CREATE TABLE `faq` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `faq` (`id`, `question`, `answer`) VALUES
+(1, 'What is <b>SME Summit</b>?', 'SME Summit 2019 is a conference and mentoring panel session organized by PHP Indonesia which aims to help the technological transformation in non-tech companies, small and medium enterprises and traditional companies, shift the paradigm that IT division is only as a support division in the company into a profit-center division and helping to transform your stagnant companies into exponential growth companies.'),
+(2, 'I am a question blablabla blablabla?', 'I am the answer <b>qweqweqwe</b>');
 
 DROP TABLE IF EXISTS `participants`;
 CREATE TABLE `participants` (
@@ -56,7 +59,9 @@ CREATE TABLE `participants` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `problem_desc` text NOT NULL,
-  `status` enum('New Request','Invoice Sent','Confirmed','Canceled','Rejected') DEFAULT NULL,
+  `status` enum('New Request','Invoice Sent','Confirmed','Canceled','Rejected') DEFAULT 'New Request',
+  `voucher_code` varchar(20) DEFAULT NULL,
+  `payment_amount` decimal(15,2) DEFAULT '0.00',
   `payment_instruction_email_sent` enum('0','1') NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -80,15 +85,27 @@ CREATE TABLE `payment_confirmation` (
   `no_ref` varchar(255) NOT NULL,
   `bank_name` varchar(64) NOT NULL,
   `bank_username` varchar(64) NOT NULL,
-  `screenshot` text NOT NULL,
+  `screenshot` text,
   `notes` text,
-  `status` enum('pending','approved','rejected') NOT NULL,
-  `created_at` datetime NOT NULL,
+  `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `email_user_id` (`email_user_id`),
   CONSTRAINT `payment_confirmation_ibfk_2` FOREIGN KEY (`email_user_id`) REFERENCES `participants` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+DROP TABLE IF EXISTS `price`;
+CREATE TABLE `price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amount` double NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `price` (`id`, `amount`, `description`, `created_at`) VALUES
+(1, 500000, 'early_bird', '2019-02-13 11:28:53');
 
 DROP TABLE IF EXISTS `speakers`;
 CREATE TABLE `speakers` (
@@ -167,4 +184,24 @@ CREATE TABLE `volunteers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2019-02-01 06:15:45
+DROP TABLE IF EXISTS `vouchers`;
+CREATE TABLE `vouchers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) NOT NULL,
+  `discount_percent` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `discount_amount` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `partner_name` varchar(100) DEFAULT NULL,
+  `partner_email` varchar(100) DEFAULT NULL,
+  `referral_percent` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `referral_amount` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `redeem_limit` int(11) DEFAULT '1000',
+  `status` enum('Active','Redeemed','Inactive') DEFAULT 'Active',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Voucher Database';
+
+INSERT INTO `vouchers` (`id`, `code`, `discount_percent`, `discount_amount`, `partner_name`, `partner_email`, `referral_percent`, `referral_amount`, `redeem_limit`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'PHPID20',  20.00,  0.00, '', '', 10.00,  0.00, 1000, 'Active', '2019-02-05 23:23:19',  '2019-02-05 23:23:19');
+
+-- 2019-02-13 06:14:19
