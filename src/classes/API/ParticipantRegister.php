@@ -160,7 +160,7 @@ class ParticipantRegister implements APIContract
 			$pdo = DB::pdo();
 			$ticketPrice = self::generatePrice();
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `ticket_price`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :ticket_price, :created_at);"
+				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `payment_amount`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :payment_amount, :created_at);"
 			);
 			$st->execute(
 				[
