@@ -74,10 +74,22 @@ class ParticipantRegister implements APIContract
 			return;
 		}
 
+		API::validateToken();
 
-		if (isset($i["voucher"])) {
-			
+
+		if (!isset($i["voucher"])) {
+			error_api("Invalid request", 400);
+			return;
 		}
+
+		if (!is_string($i["voucher"])) {
+			error_api("`voucher` must be a string", 400);
+			return;
+		}
+
+		$pdo = DB::pdo();
+		$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE ");
+
 		exit(0);
 	}
 
@@ -103,21 +115,33 @@ class ParticipantRegister implements APIContract
 	}
 
 	/**
+	 * @param float $percent_discount
+	 * @return double
+	 */
+	private static function generatePrice(float $percent_discount = 0): double
+	{
+		$pdo = DB::pdo();
+
+		$st = $pdo->prepare("SELECT `amount` FROM `price` WHERE `description` = 'early_bird' LIMIT 1;");
+		$st->execute();
+		if ($st = $st->fetch(PDO::FETCH_NUM)) {
+			$p = (double)$st[0];
+		} else {
+			$p = self::DEFAULT_TICKET_PRICE;
+		}
+
+
+		return $p - ($p * $percent_discount / 100);
+	}
+
+	/**
 	 * @return void
 	 */
 	private function save(array &$i): void
 	{
 		try {
 			$pdo = DB::pdo();
-
-			$st = $pdo->prepare("SELECT `amount` FROM `price` WHERE `description` = 'early_bird' LIMIT 1;");
-			$st->execute();
-			if ($st = $st->fetch(PDO::FETCH_NUM)) {
-				$ticketPrice = (double)$st[0];
-			} else {
-				$ticketPrice = self::DEFAULT_TICKET_PRICE;
-			}
-
+			$ticketPrice = self::generatePrice();
 			$st = $pdo->prepare(
 				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `ticket_price`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :ticket_price, :created_at);"
 			);

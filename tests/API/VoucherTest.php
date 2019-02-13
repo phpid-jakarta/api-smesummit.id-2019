@@ -14,7 +14,7 @@ static $testToken = null;
  * @license MIT
  * @package \test\API
  */
-class VolunteerRegisterTest extends TestCase
+class VoucherTest extends TestCase
 {
     use Curl;
 
@@ -44,8 +44,29 @@ class VolunteerRegisterTest extends TestCase
 	private function validInput(): array
 	{
 		return [
-			[[
-			]]
+			[
+				[
+					"voucher" => "PHPID20"
+				],
+				true,
+				"/discount 20\%/"
+			]
+		];
+	}
+
+	/**
+	 * @return array
+	 */
+	private function invalidInput(): array
+	{
+		return [
+			[
+				[
+					"voucher" => "QWEQWE"
+				],
+				false,
+				"/Invalid voucher/"
+			]
 		];
 	}
 	
@@ -74,5 +95,22 @@ class VolunteerRegisterTest extends TestCase
 		if (!is_null($mustMatch)) {
 			$this->assertTrue((bool)preg_match($mustMatch, $o["out"]));
 		}
-	}	
+	}
+
+	/**
+	 * @return array
+	 */
+	private function submit(array $form): array
+	{
+		global $testToken;
+		$opt = [
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => json_encode($form),
+			CURLOPT_HTTPHEADER => [
+				"Authorization: Bearer {$testToken}",
+				"Content-Type: application/json"
+			]
+		];
+		return $this->curl("http://localhost:8080/participant_register.php?action=voucher", $opt);
+	}
 }
