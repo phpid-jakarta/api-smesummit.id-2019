@@ -24,7 +24,7 @@ class PaymentConfirmationTest extends TestCase
 	public function testGetToken(): void
 	{
 		global $testToken;
-		$o = $this->curl("https://api.smesummit.id/payment_confirmation.php?action=get_token");
+		$o = $this->curl("http://localhost:8080/payment_confirmation.php?action=get_token");
 		$o = json_decode($o["out"], true);
 		$this->assertTrue(
 			isset(
@@ -155,7 +155,7 @@ class PaymentConfirmationTest extends TestCase
 				"Content-Type: application/json"
 			]
 		];
-		return $this->curl("https://api.smesummit.id/payment_confirmation.php?action=submit", $opt);
+		return $this->curl("http://localhost:8080/payment_confirmation.php?action=submit", $opt);
 	}
 
 	/**
