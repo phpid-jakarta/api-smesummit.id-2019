@@ -158,9 +158,25 @@ class ParticipantRegister implements APIContract
 	{
 		try {
 			$pdo = DB::pdo();
+
 			$ticketPrice = self::generatePrice();
+
+			if (isset($i["voucher"])) {
+				$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE `code` = :code LIMIT 1;");
+				$st->execute([":code" => $i["voucher"]]);
+				if ($st = $st->fetch(PDO::FETCH_NUM)) {
+					$ticketPrice = ($ticketPrice - ($ticketPrice * $st[0] / 100));
+				} else {
+					error_api("Invalid voucher");
+					return;
+				}
+			} else {
+				$i["voucher"] = null;
+			}
+
+			
 			$st = $pdo->prepare(
-				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `payment_amount`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :payment_amount, :created_at);"
+				"INSERT INTO `participants` (`name`, `company_name`, `company_sector`, `position`, `sector_to_be_coached`, `email`, `phone`, `problem_desc`, `voucher_code`, `payment_amount`, `created_at`) VALUES (:name, :company_name, :company_sector, :position, :sector_to_be_coached, :email, :phone, :problem_desc, :voucher_code, :payment_amount, :created_at);"
 			);
 			$st->execute(
 				[
@@ -172,6 +188,7 @@ class ParticipantRegister implements APIContract
 					":email" => $i["email"],
 					":phone" => $i["phone"],
 					":problem_desc" => $i["problem_desc"],
+					":voucher_code" => $i["voucher"],
 					":payment_amount" => $ticketPrice,
 					":created_at" => date("Y-m-d H:i:s")
 				]
