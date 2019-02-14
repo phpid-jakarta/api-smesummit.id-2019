@@ -88,17 +88,17 @@ class ParticipantRegister implements APIContract
 		}
 
 		$pdo = DB::pdo();
-		$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE `code` = :code LIMIT 1;");
+		$st = $pdo->prepare("SELECT `discount_percent`,`discount_amount` FROM `vouchers` WHERE `code` = :code AND `status` = 'Active' LIMIT 1;");
 		$st->execute([":code" => $i["voucher"]]);
 		if ($st = $st->fetch(PDO::FETCH_NUM)) {
 
 			$ticketPrice = self::generatePrice();
 			$st[0] = (double)$st[0];
-
+			$st[1] = (double)$st[1];
 			print API::json001("success",
 				[
 					"before_discount" => $ticketPrice,
-					"after_discount" => ($ticketPrice - ($ticketPrice * $st[0] / 100)),
+					"after_discount" => (($ticketPrice - ($ticketPrice * $st[0] / 100)) - $st[1]),
 					"description" => "got discount {$st[0]}%"
 				]
 			);
@@ -162,10 +162,12 @@ class ParticipantRegister implements APIContract
 			$ticketPrice = self::generatePrice();
 
 			if (isset($i["voucher"])) {
-				$st = $pdo->prepare("SELECT `discount_percent` FROM `vouchers` WHERE `code` = :code LIMIT 1;");
+				$st = $pdo->prepare("SELECT `discount_percent`,`discount_amount` FROM `vouchers` WHERE `code` = :code AND `status` = 'Active' LIMIT 1;");
 				$st->execute([":code" => $i["voucher"]]);
 				if ($st = $st->fetch(PDO::FETCH_NUM)) {
-					$ticketPrice = ($ticketPrice - ($ticketPrice * $st[0] / 100));
+					$st[0] = (double)$st[0];
+					$st[1] = (double)$st[1];
+					$ticketPrice = (($ticketPrice - ($ticketPrice * $st[0] / 100)) - $st[1]);
 				} else {
 					error_api("Invalid voucher");
 					return;
