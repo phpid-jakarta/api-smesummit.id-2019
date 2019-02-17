@@ -2,6 +2,16 @@
 
 require __DIR__."/../bootstrap/init.php";
 
+if (!isset($_GET["email"])) {
+	error_api("email required", 400);
+	exit;
+}
+
+if (!is_string($_GET["email"])) {
+	error_api("email must be a string", 400);
+	exit;
+}
+
 /**
  * @param $u array
  * @return bool
@@ -24,41 +34,25 @@ function sendMail(array $u): bool
 	return (bool)mail($to, $subject, $message, implode("\r\n", $headers));
 }
 
-$ticketPrice = "Rp.500.000";
 
-$u = [
-	"email" => "ammarfaizi2@gmail.com",
-	"phone" => "085867152777",
-	"name" => "Ammar Faizi",
-	"position" => "Owner",
-	"company_name" => "Tea Inside",
-	"ticket_price" => $ticketPrice
-];
-
-sendMail($u);
-exit(0);
-
-
-$u = null;
-
-/**
- * Kirim email ke semua participant yang belum mendapatkan instruksi pembayaran.
- */
 $pdo = DB::pdo();
 $st = $pdo->prepare(
-	"SELECT `id`,`email`,`phone`,`name`,`position`,`company_name`,`payment_amount` AS `ticket_price` FROM `participants` WHERE `email_verif_sent` = '0';"
+	"SELECT `id`,`email`,`phone`,`name`,`position`,`company_name`,`payment_amount` AS `ticket_price` FROM `participants` WHERE `email` LIKE :email LIMIT 1;"
 );
-$st->execute();
-while ($u = $st->fetch(PDO::FETCH_ASSOC)):	
+$st->execute([":email" => $_GET["email"]]);
+if ($u = $st->fetch(PDO::FETCH_ASSOC)):
 	if (sendMail($u)) {
 		$pdo->prepare("UPDATE `participants` SET `payment_instruction_email_sent` = '1' WHERE `id` = :participant_id LIMIT 1;")
 			->execute([":participant_id" => $u["id"]]);
-		printf("[Success] %s\n", $to);
+		$status = "success";
 	} else {
-		printf("[Failed] %s\n", $to);
+		$status = "failed";
 	}
-
-endwhile;
-
-$st = $pdo = null;
-unset($st, $pdo);
+else:
+	print json_encode(
+		[
+			"status" => "error",
+			"message" => "Email not found!"
+		]
+	);
+endif;
