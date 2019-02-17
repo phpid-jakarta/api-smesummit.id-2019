@@ -1,5 +1,5 @@
 <?php
-
+ini_set("display_errors", true);
 require __DIR__."/../bootstrap/init.php";
 
 if (!isset($_GET["email"])) {
