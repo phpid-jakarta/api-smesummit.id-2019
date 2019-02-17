@@ -48,6 +48,11 @@ if ($u = $st->fetch(PDO::FETCH_ASSOC)):
 	} else {
 		$status = "failed";
 	}
+	print json_encode(
+		[
+			"status" => $status
+		]
+	);
 else:
 	print json_encode(
 		[
