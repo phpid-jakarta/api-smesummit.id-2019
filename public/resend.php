@@ -57,7 +57,7 @@ else:
 	print json_encode(
 		[
 			"status" => "error",
-			"message" => "Email not found!"
+			"message" => sprintf("Email \"%s\" not found!", $_GET["email"])
 		]
 	);
 endif;
