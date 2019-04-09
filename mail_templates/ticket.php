@@ -320,6 +320,8 @@
                                             </tr>
                                           </table>
                                           <br><br>
+                                          <h3>Download PDF: <a href="<?php print $pdfFile; ?>"><?php print $pdfFile; ?></a></h3>
+                                          <br><br>
                                           Jangan lupa untuk menambahkan event ini di kalendar Anda, silahkan klik tautan berikut:
                                           <br><br>
                                           <a target="_blank" href="https://calendar.google.com/event?action=TEMPLATE&amp;tmeid=NWw2dm92YzRnMGtzY2NpYXE3MWJvaWJkODMgbWF6aXBhbm5laEBt&amp;tmsrc=mazipanneh%40gmail.com"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
