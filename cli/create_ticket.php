@@ -8,6 +8,7 @@ $st = $pdo->prepare("SELECT `a`.`name`,`a`.`company_name`,`a`.`email`,`a`.`phone
 $st->execute();
 while ($r = $st->fetch(PDO::FETCH_ASSOC)) {
 	print json_encode($r)."\n";
+	
 	// $barcode = new Picqer\Barcode\BarcodeGeneratorPNG();
 	// $qrCode = new Endroid\QrCode\QrCode($r["ticket_code"]);
 
