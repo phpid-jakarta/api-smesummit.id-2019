@@ -7,10 +7,13 @@ use Endroid\QrCode\QrCode;
 use Picqer\Barcode\BarcodeGeneratorJPG;
 
 $pdo = DB::pdo();
-$st = $pdo->prepare("SELECT `a`.`name`,`a`.`position`,`a`.`company_name`,`a`.`email`,`a`.`phone`,CONCAT('par',`b`.`ticket_code`) AS `ticket_code` FROM `participants` AS `a` INNER JOIN `participants_ticket` AS `b` ON `a`.`id` = `b`.`participant_id` WHERE `a`.`name` = 'Ammar Faizi';");
+$st = $pdo->prepare("SELECT `a`.`name`,`a`.`position`,`a`.`company_name`,`a`.`email`,`a`.`phone`,CONCAT('par',`b`.`ticket_code`) AS `ticket_code` FROM `participants` AS `a` INNER JOIN `participants_ticket` AS `b` ON `a`.`id` = `b`.`participant_id`;");
 $st->execute();
-$u = $st->fetch(PDO::FETCH_ASSOC);
-sendMail($u);
+while ($u = $st->fetch(PDO::FETCH_ASSOC)) {
+	print "Sending to {$u["email"]}...";
+	print sendMail($u) ? "OK" : "Failed";
+	print "\n";
+}
 
 function gen_content($u) {
 	$hash = sha1(json_encode($u));
@@ -59,7 +62,7 @@ function gen_pdf($u, $hash) {
  */
 function sendMail(array $u): bool
 {
-	$to = "memorycopy33@gmail.com";
+	$to = $u["email"];
 	$subject = "SME Summit 2019 - Ticket";
 	ob_start();
 	gen_content($u);
