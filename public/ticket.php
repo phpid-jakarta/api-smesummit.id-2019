@@ -21,4 +21,10 @@ $barCode = base64_encode(
 
 $u["phone"] = preg_replace("/[^\d\+]/", "", $u["phone"]);
 
-require __DIR__."/../mail_templates/ticket.php";
+ob_start();
+require __DIR__."/../mail_templates/ticket_pdf.php";
+
+
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->WriteHTML(ob_get_clean());
+$mpdf->Output();
