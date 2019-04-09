@@ -311,9 +311,9 @@
                                           <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                             <tr>
                                               <td align="center" valign="top" class="textContent">
-                                                <img src="data:image/png;base64,<?php print $qrCode; ?>" alt="" srcset=""/>
+                                                <img src="<?php print $qrCode; ?>" alt="" srcset=""/>
                                                 <br>
-                                                <img src="data:image/jpg;base64,<?php print $barCode; ?>" alt="" srcset=""/>
+                                                <img src="<?php print $barCode; ?>" alt="" srcset=""/>
                                                 <br>
                                                 <b style="font-size: 20px;"><?php print $u["ticket_code"]; ?></b>
                                               </td>

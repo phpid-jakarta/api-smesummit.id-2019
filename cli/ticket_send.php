@@ -13,9 +13,25 @@ $u = $st->fetch(PDO::FETCH_ASSOC);
 sendMail($u);
 
 function gen_content($u) {
-	$qrCode = base64_encode((new QrCode($u["ticket_code"]))->writeString());
-	$barCode = base64_encode((new BarcodeGeneratorJPG())->getBarcode($u["ticket_code"], BarcodeGeneratorJPG::TYPE_CODE_128));
+	file_put_contents(
+		BASEPATH."/storage/tickets/qrcode/{$u["ticket_code"]}.png",
+		(new QrCode($u["ticket_code"]))->writeString()
+	);
+
+	file_put_contents(
+		BASEPATH."/storage/tickets/barcode/{$u["ticket_code"]}.png",
+		(new BarcodeGeneratorJPG())->getBarcode($u["ticket_code"], BarcodeGeneratorJPG::TYPE_CODE_128)
+	);
+	$barCode = "https://api.smesummit.id/tickets/barcode/{$u["ticket_code"]}.png";
+	$qrCode = "https://api.smesummit.id/tickets/qrcode/{$u["ticket_code"]}.png";
+
 	$u["phone"] = preg_replace("/[^\d\+]/", "", $u["phone"]);
+
+	foreach ($u as &$v) {
+		$v = htmlspecialchars($v);
+	}
+	unset($v);
+
 	require BASEPATH."/mail_templates/ticket.php";
 }
 
