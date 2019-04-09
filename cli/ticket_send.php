@@ -40,6 +40,8 @@ function gen_content($u) {
 
 function gen_pdf($u, $hash) {
 	ob_start();
+	$qrCode = base64_encode(file_get_contents(BASEPATH."/storage/tickets/qrcode/{$u["ticket_code"]}_{$hash}.png"));
+	$barcode = base64_encode(file_get_contents(BASEPATH."/storage/tickets/barcode/{$u["ticket_code"]}_{$hash}.png"));
 	require __DIR__."/../mail_templates/ticket_pdf.php";
 	$mpdf = new \Mpdf\Mpdf();
 	$mpdf->WriteHTML(ob_get_clean());
