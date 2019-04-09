@@ -28,7 +28,7 @@ function sendMail(array $u): bool
 	$to = "ammarfaizi2@gmail.com";
 	$subject = "SME Summit 2019 - Ticket";
 	ob_start();
-	gen_content();
+	gen_content($u);
 	$message = ob_get_clean();
 
 	$headers = [
