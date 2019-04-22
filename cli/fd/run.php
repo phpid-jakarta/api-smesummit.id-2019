@@ -9,12 +9,14 @@ $st->execute();
 
 while ($u = $st->fetch(PDO::FETCH_ASSOC)) {
 	if (preg_match("/php|biznet/i", $u["voucher_code"])) {
-		print json_encode($u)."\n";
-		unset($u["voucher_code"]);
-		$hash = sha1(json_encode($u));
-		print "Hash: {$hash}\n";
-		gen_pdf($u, $hash);
-		// send_mail($u, $hash);
+		if (!empty($u["email"])) {
+			print json_encode($u)."\n";
+			unset($u["voucher_code"]);
+			$hash = sha1(json_encode($u));
+			// print "Hash: {$hash}\n";
+			// gen_pdf($u, $hash);	
+			send_mail($u, $hash);
+		}
 	}
 }
 
