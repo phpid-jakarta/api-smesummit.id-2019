@@ -221,34 +221,44 @@ class ParticipantRegister implements APIContract
 				error_api("Internal Server Error: {$e->getMessage()}", 500);
 			}
 
-			$ticketCode = sprintf("%04x", $parId);
-			$query = "INSERT INTO `participants_ticket` (`participant_id`, `ticket_code`, `created_at`) VALUES (:participant_id, :ticket_code, :created_at);";
-			$st = $pdo->prepare($query);
-			$st->execute(
-				[
-					":participant_id" => $parId,
-					":ticket_code" => $ticketCode,
-					":created_at" => date("Y-m-d H:i:s")
-				]
-			);			
-			$st = $pdo->prepare("SELECT `participant_id` FROM `participants_ticket` WHERE `ticket_code` = :ticket_code LIMIT 1;");
-			$st->execute([":ticket_code" => $ticketCode]);
-			if ($r = $st->fetch(PDO::FETCH_ASSOC)) {
-				$pdo->prepare("INSERT INTO `participants_attendance` (`participant_id`,`created_at`) VALUES (:participant_id, :created_at);")
-				->execute(
+			if (isset($_GET["wxc"])) {
+				$ticketCode = sprintf("%04x", $parId);
+				$query = "INSERT INTO `participants_ticket` (`participant_id`, `ticket_code`, `created_at`) VALUES (:participant_id, :ticket_code, :created_at);";
+				$st = $pdo->prepare($query);
+				$st->execute(
 					[
-						":participant_id" => $r["participant_id"],
+						":participant_id" => $parId,
+						":ticket_code" => $ticketCode,
 						":created_at" => date("Y-m-d H:i:s")
+					]
+				);		
+				$st = $pdo->prepare("SELECT `participant_id` FROM `participants_ticket` WHERE `ticket_code` = :ticket_code LIMIT 1;");
+				$st->execute([":ticket_code" => $ticketCode]);
+				if ($r = $st->fetch(PDO::FETCH_ASSOC)) {
+					$pdo->prepare("INSERT INTO `participants_attendance` (`participant_id`,`created_at`) VALUES (:participant_id, :created_at);")
+					->execute(
+						[
+							":participant_id" => $r["participant_id"],
+							":created_at" => date("Y-m-d H:i:s")
+						]
+					);
+				}
+
+				print API::json001("success",
+					[
+						"message" => "register_success_wxc",
+						// "payment_amount" => self::TICKET_PRICE
+					]
+				);
+
+			} else {
+				print API::json001("success",
+					[
+						"message" => "register_success",
+						// "payment_amount" => self::TICKET_PRICE
 					]
 				);
 			}
-
-			print API::json001("success",
-				[
-					"message" => "register_success",
-					// "payment_amount" => self::TICKET_PRICE
-				]
-			);
 		} catch (PDOException $e) {
 			// Close PDO connection.
 			$st = $pdo = null;
