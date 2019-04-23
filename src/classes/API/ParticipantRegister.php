@@ -8,6 +8,8 @@ use API;
 use PDOException;
 use Contracts\APIContract;
 
+ini_set("display_errors", true);
+
 /**
  * @author Ammar Faizi <ammarfaizi2@gmail.com> https://www.facebook.com/ammarfaizi2
  * @license MIT
