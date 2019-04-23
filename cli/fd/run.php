@@ -5,12 +5,12 @@ require __DIR__."/../../vendor/autoload.php";
 
 $pdo = DB::pdo();
 $st = $pdo->prepare(
-	"SELECT `a`.`voucher_code`,`a`.`name`,`a`.`position`,`a`.`company_name`,`a`.`email`,`a`.`phone`,CONCAT('par',`b`.`ticket_code`) AS `ticket_code` FROM `participants` AS `a` INNER JOIN `participants_ticket` AS `b` ON `a`.`id` = `b`.`participant_id` WHERE `a`.`created_at` >= '".date("Y-m-d 00:00:00", time() - (3600 * 24))."';"
+	"SELECT `a`.`voucher_code`,`a`.`name`,`a`.`position`,`a`.`company_name`,`a`.`email`,`a`.`phone`,CONCAT('par',`b`.`ticket_code`) AS `ticket_code` FROM `participants` AS `a` INNER JOIN `participants_ticket` AS `b` ON `a`.`id` = `b`.`participant_id` WHERE `a`.`created_at` >= '2019-04-23 00:00:00';"
 );
 $st->execute();
 $i = 1;
 while ($u = $st->fetch(PDO::FETCH_ASSOC)) {
-	if (preg_match("/(php)|(biznet)/i", $u["voucher_code"])) {
+	//if (preg_match("/(php)|(biznet)/i", $u["voucher_code"])) {
 		if (!empty($u["email"])) {
 			// print json_encode($u)."\n";
 			// unset($u["voucher_code"]);
@@ -19,7 +19,7 @@ while ($u = $st->fetch(PDO::FETCH_ASSOC)) {
 			// gen_pdf($u, $hash);	
 			send_mail($i++, $u, $hash);
 		}
-	}
+	//}
 }
 
 use Endroid\QrCode\QrCode;
