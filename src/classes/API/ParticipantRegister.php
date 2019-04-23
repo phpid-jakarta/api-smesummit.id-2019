@@ -163,7 +163,7 @@ class ParticipantRegister implements APIContract
 
 			$ticketPrice = self::generatePrice();
 
-			if (isset($i["voucher"])) {
+			if (isset($i["voucher"]) && (!empty($i["voucher"]))) {
 				$st = $pdo->prepare("SELECT `discount_percent`,`discount_amount` FROM `vouchers` WHERE `code` = :code AND `status` = 'Active' LIMIT 1;");
 				$st->execute([":code" => $i["voucher"]]);
 				if ($st = $st->fetch(PDO::FETCH_NUM)) {
@@ -171,7 +171,7 @@ class ParticipantRegister implements APIContract
 					$st[1] = (double)$st[1];
 					$ticketPrice = (($ticketPrice - ($ticketPrice * $st[0] / 100)) - $st[1]);
 				} else {
-					error_api("Invalid voucher");
+					error_api("Invalid voucher", 400);
 					return;
 				}
 			} else {
